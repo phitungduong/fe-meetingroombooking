@@ -1,0 +1,95 @@
+.sidebar {
+  width: 240px;
+  height: 95vh;
+  background-color: #5f6ec4;
+  color: white;
+  padding: 20px;
+
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+}
+
+/* LOGO */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.logo-box {
+  background: rgba(255,255,255,0.15);
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+/* MENU */
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+}
+
+/* ITEM */
+.menu a,
+.bottom a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 10px 12px;
+  border-radius: 10px;
+
+  text-decoration: none;
+  color: white;
+
+  transition: all 0.25s ease;
+  margin-bottom: 50px;
+}
+
+/* ICON */
+.icon {
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(255,255,255,0.15);
+  border-radius: 50%;
+}
+
+/* HOVER */
+.menu a:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+/* ACTIVE */
+.menu a.active {
+  background: #ffffff;
+  color: #5f6ec4;
+  font-weight: 500;
+}
+
+.menu a.active .icon {
+  background: #5f6ec4;
+}
+
+.menu a.active mat-icon {
+  color: white;
+}
+
+/* BOTTOM */
+.bottom {
+  margin-top: 300px;
+}
+
+.bottom a:hover {
+  background: rgba(255,255,255,0.2);
+}

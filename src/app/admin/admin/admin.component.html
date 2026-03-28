@@ -1,0 +1,32 @@
+<mat-sidenav-container class="sidenav-container">
+
+  <!-- SIDEBAR -->
+  <mat-sidenav #sidenav mode="side" opened>
+
+    <app-sidebar></app-sidebar>
+
+  </mat-sidenav>
+
+  <!-- MAIN -->
+  <mat-sidenav-content>
+
+    <!-- HEADER -->
+    <mat-toolbar style="background-color: #5f6ec4;color: white;">
+
+      <button mat-icon-button (click)="sidenav.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+
+
+
+
+    </mat-toolbar>
+
+    <!-- CONTENT -->
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
+
+  </mat-sidenav-content>
+
+</mat-sidenav-container>

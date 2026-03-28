@@ -1,0 +1,100 @@
+.container {
+  max-width: 520px;
+  margin: 40px auto;
+  padding: 25px;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* Title */
+h2 {
+  margin-bottom: 20px;
+  font-weight: 600;
+  text-align: center;
+  color: #333;
+}
+
+/* Form spacing */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 10px;
+}
+
+/* Full width */
+.full-width {
+  width: 100%;
+  margin: 10px;
+}
+
+/* Checkbox spacing */
+mat-checkbox {
+  margin-top: 5px;
+}
+
+/* Button */
+.button-group {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+
+}
+
+button {
+  flex: 1;
+  height: 42px;
+  border-radius: 8px;
+  font-weight: 500;
+  margin-left: 50px;
+}
+
+/* Hover button */
+button:hover {
+  transform: translateY(-1px);
+  transition: 0.2s;
+}
+
+/* Input focus effect */
+::ng-deep .mat-mdc-form-field.mat-focused .mdc-notched-outline {
+  border-color: #5f6ec4 !important;
+}
+
+/* Subtle input background */
+::ng-deep .mat-mdc-text-field-wrapper {
+  background: #fafafa;
+  border-radius: 8px;
+}
+
+/* Label style */
+::ng-deep .mat-mdc-form-field label {
+  font-weight: 500;
+}
+
+/* Section grouping (optional nếu bạn muốn chia block) */
+.section {
+  padding: 10px;
+  border-radius: 8px;
+  background: #f9f9f9;
+}
+
+.mat-raised-button {
+  transition: all 0.2s ease;
+  color: white !important;
+  background-color: #5f6ec4;
+}
+.mat-raised-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  background-color: #4d5cb1 !important;
+  color: white !important;
+}
+.mat-button{
+  transition: all 0.2s ease;
+}
+.mat-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+

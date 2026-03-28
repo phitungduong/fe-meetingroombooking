@@ -1,0 +1,85 @@
+.sidebar{
+  /* width:240px; */
+  height:100vh;
+
+  background-color: #5f6ec4;
+
+  color:white;
+  padding:25px;
+
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+
+
+}
+
+/* logo */
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:20px;
+  margin-bottom:40px;
+}
+
+.logo-box{
+
+  padding:6px 10px;
+  font-weight:bold;
+}
+
+/* menu */
+
+.menu a,
+
+.bottom a{
+  display:flex;
+  align-items:center;
+  gap:12px;
+
+  padding:12px 15px;
+  margin-bottom:50px;
+
+  border-radius:12px;
+
+  text-decoration:none;
+  color:white;
+
+  transition:0.3s;
+}
+
+/* icon circle */
+
+.icon{
+  width:35px;
+  height:35px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  background:rgba(255,255,255,0.15);
+  border-radius:50%;
+}
+
+/* hover */
+
+.menu a:hover{
+  background:rgba(165, 11, 11, 0.2);
+}
+
+/* active */
+
+.menu a.active{
+  background:#ffffff;
+  color:#5f6ec4;
+}
+
+.bottom a:hover{
+  background:rgba(250, 250, 250, 0.2);
+}
+.menu{
+  margin-top: -250px;
+}

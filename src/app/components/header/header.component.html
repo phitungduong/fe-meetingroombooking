@@ -1,0 +1,29 @@
+<div class="header">
+
+  <div class="header-left">
+    <h1 class="logo" routerLink="/calendar">
+  Calendar
+</h1>
+  </div>
+
+  <div class="user-header">
+  <div class="user-info">
+    <div class="user-name">
+      {{ userService.getFullName() }}
+    </div>
+    <div class="user-email">
+      {{ userService.getEmail() }}
+    </div>
+  </div>
+
+  <button mat-icon-button [matMenuTriggerFor]="menu">
+    <mat-icon>expand_more</mat-icon>
+  </button>
+</div>
+
+<mat-menu #menu="matMenu">
+  <button mat-menu-item routerLink="/profile" >Profile</button>
+  <button mat-menu-item (click)="logout()">Logout</button>
+</mat-menu>
+
+</div>

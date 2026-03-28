@@ -1,0 +1,65 @@
+<div class="sidebar">
+
+  <!-- Logo -->
+  <div class="logo">
+    <div class="logo-box">Meeting Room Booking</div>
+    <span></span>
+  </div>
+
+  <!-- Menu -->
+  <div class="menu">
+
+    <!-- <a routerLink="dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+      <div class="icon">
+        <mat-icon>dashboard</mat-icon>
+      </div>
+      Dashboard
+    </a> -->
+    <a routerLink="calendar" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+      <div class="icon">
+        <mat-icon>calendar_today</mat-icon>
+      </div>
+      Calendar
+    </a>
+
+    <a routerLink="rooms" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+      <div class="icon">
+        <mat-icon>meeting_room</mat-icon>
+      </div>
+      Rooms
+    </a>
+
+    <!-- <a routerLink="bookings" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+      <div class="icon">
+        <mat-icon>gavel</mat-icon>
+      </div>
+      Bookings
+    </a> -->
+
+
+    <a routerLink="profile" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+      <div class="icon">
+        <mat-icon>person</mat-icon>
+      </div>
+      Profile
+    </a>
+
+
+
+
+  </div>
+
+  <!-- Bottom -->
+  <div class="bottom">
+
+
+    <a (click)="logout()">
+      <div class="icon">
+        <mat-icon>logout</mat-icon>
+      </div>
+      Logout
+    </a>
+
+  </div>
+
+</div>

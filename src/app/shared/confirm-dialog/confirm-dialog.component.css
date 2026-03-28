@@ -1,0 +1,12 @@
+::ng-deep .mat-dialog-container {
+  border-radius: 12px;
+  padding: 20px;
+}
+ .mat-raised-button {
+  transition: all 0.2s ease;
+ }
+ .mat-raised-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  background-color: #a72222;
+ }

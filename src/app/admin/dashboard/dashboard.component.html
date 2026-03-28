@@ -1,0 +1,158 @@
+<div class="dashboard">
+<h1>Dashboard</h1>
+  <!-- TOP CARDS -->
+  <div class="cards">
+    <div class="card">
+      <h3>Tổng phòng</h3>
+      <p>{{ stats.totalRoom }}</p>
+    </div>
+
+    <div class="card">
+      <h3>Booking hôm nay</h3>
+      <p>{{ stats.todayBookings }}</p>
+    </div>
+
+    <div class="card">
+      <h3>Sắp tới</h3>
+      <p>{{ stats.upcoming }}</p>
+
+    </div>
+
+    <div class="card">
+      <h3>Đang sử dụng</h3>
+      <p>{{ stats.ongoing }}</p>
+    </div>
+
+    <div class="card">
+      <h3>Đã xong</h3>
+      <p>{{ stats.recent }}</p>
+    </div>
+
+  </div>
+
+  <!-- TABLE -->
+  <div class="table-container">
+
+    <mat-tab-group>
+
+      <!-- Ongoing -->
+      <mat-tab label="Ongoing">
+        <div class="card" *ngIf="ongoing && ongoing.length > 0">
+          <h2>Ongoing Meetings</h2>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Room</th>
+                <th>Capacity</th>
+                <th>Location</th>
+                <th>Date</th>
+                <th>Start</th>
+                <th>End</th>
+                <th>Name</th>
+                <th>Email</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr *ngFor="let b of pagedOngoing">
+                <td>{{b.roomName}}</td>
+                <td>{{b.capacity}}</td>
+                <td>{{b.location}}</td>
+                <td>{{b.startTime | date:'yyyy-MM-dd'}}</td>
+                <td>{{b.startTime | date:'HH:mm'}}</td>
+                <td>{{b.endTime | date:'HH:mm'}}</td>
+                <td>{{b.username}}</td>
+                <td>{{b.email}}</td>
+              </tr>
+            </tbody>
+          </table>
+          <mat-paginator [length]="ongoing?.length || 0" [pageSize]="pageSize" [pageIndex]="ongoingPageIndex"
+            (page)="onPageChange($event, 'ongoing')">
+          </mat-paginator>
+        </div>
+      </mat-tab>
+
+      <!-- Upcoming -->
+      <mat-tab label="Upcoming">
+        <div class="card" *ngIf="upcoming && upcoming.length > 0">
+          <h2>Upcoming Meetings</h2>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Room</th>
+                <th>Capacity</th>
+                <th>Location</th>
+                <th>Date</th>
+                <th>Start</th>
+                <th>End</th>
+                <th>Name</th>
+                <th>Email</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr *ngFor="let b of pagedUpcoming">
+                <td>{{b.roomName}}</td>
+                <td>{{b.capacity}}</td>
+                <td>{{b.location}}</td>
+                <td>{{b.startTime | date:'yyyy-MM-dd'}}</td>
+                <td>{{b.startTime | date:'HH:mm'}}</td>
+                <td>{{b.endTime | date:'HH:mm'}}</td>
+                <td>{{b.username}}</td>
+                <td>{{b.email}}</td>
+              </tr>
+            </tbody>
+          </table>
+          <mat-paginator [length]="upcoming?.length || 0" [pageSize]="pageSize" [pageIndex]="upcomingPageIndex"
+            (page)="onPageChange($event, 'upcoming')">
+          </mat-paginator>
+        </div>
+      </mat-tab>
+
+      <!-- Recent -->
+      <mat-tab label="Recent">
+        <div class="card" *ngIf="recent && recent.length > 0">
+          <h2>Recent Meetings</h2>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Room</th>
+                <th>Capacity</th>
+                <th>Location</th>
+                <th>Date</th>
+                <th>Start</th>
+                <th>End</th>
+                <th>Name</th>
+                <th>Email</th>
+
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr *ngFor="let b of pagedRecent">
+                <td>{{b.roomName}}</td>
+                <td>{{b.capacity}}</td>
+                <td>{{b.location}}</td>
+                <td>{{b.startTime | date:'yyyy-MM-dd'}}</td>
+                <td>{{b.startTime | date:'HH:mm'}}</td>
+                <td>{{b.endTime | date:'HH:mm'}}</td>
+                <td>{{b.username}}</td>
+                <td>{{b.email}}</td>
+
+              </tr>
+            </tbody>
+          </table>
+          <mat-paginator [length]="recent?.length || 0" [pageSize]="pageSize" [pageIndex]="recentPageIndex"
+            (page)="onPageChange($event, 'recent')">
+          </mat-paginator>
+        </div>
+      </mat-tab>
+
+    </mat-tab-group>
+
+  </div>
+
+</div>

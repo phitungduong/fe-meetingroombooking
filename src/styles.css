@@ -1,0 +1,9 @@
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+.calendar-page {
+  height: calc(100vh - 64px); /* trừ header */
+  overflow: auto;
+}

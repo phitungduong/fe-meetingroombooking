@@ -1,0 +1,48 @@
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* mỗi hàng */
+.row {
+  display: flex;
+  gap: 16px !important;
+}
+
+/* 2 cột */
+.row mat-form-field {
+  flex: 1;
+
+}
+
+/* hàng 1 cột (status) */
+.row.single mat-form-field {
+  flex: 100%;
+}
+
+/* responsive (mobile) */
+@media (max-width: 600px) {
+  .row {
+    flex-direction: column;
+  }
+}
+
+.mat-raised-button {
+  transition: all 0.2s ease;
+  color: white !important;
+  background-color: #5f6ec4;
+}
+.mat-raised-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  background-color: #4d5cb1 !important;
+  color: white !important;
+}
+.mat-button{
+  transition: all 0.2s ease;
+}
+.mat-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}

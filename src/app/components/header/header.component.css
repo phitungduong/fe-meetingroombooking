@@ -1,0 +1,117 @@
+/* ===== HEADER ===== */
+.header {
+  height: 64px;
+  background: #ffffff;
+  border-bottom: 1px solid #eaeaf0;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 24px;
+
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
+  box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+}
+
+/* ===== LEFT ===== */
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header-left h1 {
+  font-size: 30px;
+  font-weight: 900;
+  color: #5f6ec4;
+  margin: 0;
+}
+
+/* ===== RIGHT ===== */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* ===== USER CARD (NEW UI) ===== */
+.user-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  background: #ffffff;
+  padding: 0px 14px;
+
+  cursor: pointer;
+
+}
+
+/* hover effect */
+
+
+/* ===== USER INFO ===== */
+.user-info {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+  padding: 4px 10px;
+  border-radius: 0px;
+  background-color: white;
+
+}
+
+/* name */
+.user-name {
+  font-weight: 600;
+  font-size: 14px;
+  color: #2c2c2c;
+}
+
+/* email */
+.user-email {
+  font-size: 12px;
+  color: #8a8a8a;
+
+  max-width: 180px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ===== DROPDOWN ICON ===== */
+.user-header mat-icon {
+  font-size: 20px;
+  color: #777;
+  margin-left: 4px;
+}
+
+/* ===== MENU ===== */
+.mat-menu-panel {
+  border-radius: 10px !important;
+  padding: 6px 0 !important;
+}
+
+/* item */
+.mat-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+}
+
+/* hover */
+.mat-menu-item:hover {
+  background: #f5f7ff;
+}
+
+/* icon */
+.mat-menu-item mat-icon {
+  font-size: 18px;
+  color: #ffffff;
+}
+

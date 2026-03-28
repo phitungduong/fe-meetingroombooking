@@ -1,0 +1,51 @@
+<mat-card>
+
+  <mat-card-title>Login</mat-card-title>
+
+  <mat-card-content>
+
+    <form [formGroup]="form" (ngSubmit)="submit()">
+
+      <p>
+        <mat-form-field appearance="outline">
+          <input type="text" matInput placeholder="Username" formControlName="username">
+        </mat-form-field>
+      </p>
+
+      <p>
+        <mat-form-field appearance="outline">
+          <mat-label>Enter your password</mat-label>
+
+          <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" />
+
+          <button mat-icon-button matSuffix type="button" (click)="clickEvent($event)"
+            [attr.aria-label]="'Toggle password visibility'" [attr.aria-pressed]="hide">
+            <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
+
+        </mat-form-field>
+      </p>
+
+      <p *ngIf="error" class="error">
+        {{ error }}
+      </p>
+
+      <div class="button">
+        <button type="submit" mat-raised-button color="primary" class="login-btn">
+          Login
+        </button>
+      </div>
+
+      <!-- Register link -->
+      <div class="register">
+        <span>Don't have an account?</span>
+        <button class="button-regis" mat-button color="accent" type="button" (click)="goRegister()">
+          Register
+        </button>
+      </div>
+
+    </form>
+
+  </mat-card-content>
+
+</mat-card>

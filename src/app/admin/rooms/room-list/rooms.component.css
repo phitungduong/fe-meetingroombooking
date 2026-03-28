@@ -1,0 +1,100 @@
+/* Container */
+:host {
+  display: block;
+  padding: 20px;
+}
+
+/* Title */
+h1 {
+  color: #5f6ec4;
+  font-weight: 900;
+  margin-bottom: 20px;
+}
+
+/* Table */
+table {
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* Header */
+th.mat-header-cell {
+  background-color: #f5f5f5;
+  font-weight: 700;
+  text-align: center;
+}
+
+/* Cell */
+td.mat-cell {
+  text-align: center;
+  vertical-align: middle;
+  padding: 14px;
+}
+
+/* Row hover */
+tr.mat-row:hover {
+  background-color: #f9f9ff;
+  transition: 0.2s;
+}
+
+/* Button */
+button {
+  transition: all 0.2s ease;
+}
+
+/* Action buttons */
+button.mat-icon-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Status (nếu dùng sau này) */
+.available {
+  color: #4caf50;
+  font-weight: bold;
+}
+
+.busy {
+  color: #f44336;
+  font-weight: bold;
+}
+
+/* Inactive room */
+.inactive {
+  color: #999;
+  text-decoration: line-through;
+}
+
+/* Paginator */
+mat-paginator {
+  margin-top: 12px;
+}
+
+/* Create button spacing */
+button[mat-raised-button] {
+  margin-bottom: 10px;
+}
+.mat-mdc-header-cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mat-mdc-header-cell h4 {
+  margin: 0;
+  font-weight: 900;
+}
+th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type {
+   padding: 0;
+}
+.active {
+
+  font-weight: 600;
+}
+
+.inactive {
+ 
+  font-weight: 600;
+}
+

@@ -1,0 +1,125 @@
+<div class="container" *ngIf="booking">
+
+  <!-- HEADER -->
+  <div class="header">
+
+    <div class="title">
+      <h2>Room {{ booking.meetingRoom.name }}</h2>
+      <span class="sub">Booking Detail</span>
+    </div>
+
+    <mat-chip class="status-chip"
+          [ngClass]="booking.status.toLowerCase()">
+  {{ booking.status }}
+</mat-chip>
+
+      <!-- 🔥 NÚT ĐÓNG -->
+      <button mat-icon-button (click)="close.emit()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+
+  </div>
+
+  <!-- GRID -->
+  <div class="grid">
+
+    <!-- BOOKING -->
+    <mat-card class="card">
+      <mat-card-title>
+        <mat-icon>event</mat-icon>
+        Booking Info
+      </mat-card-title>
+
+      <mat-card-content class="info">
+
+        <div class="row">
+          <span>Date</span>
+          <strong>{{ booking?.startTime | date:'dd/MM/yyyy' }}</strong>
+        </div>
+
+        <div class="row">
+          <span>Time</span>
+          <strong>
+            {{ booking.startTime | date:'HH:mm' }} -
+            {{ booking.endTime | date:'HH:mm' }}
+          </strong>
+        </div>
+
+        <div class="row">
+          <span>Duration</span>
+          <strong>
+            {{ getDuration(booking.startTime, booking.endTime) }} hours
+          </strong>
+        </div>
+
+      </mat-card-content>
+    </mat-card>
+
+    <!-- ROOM -->
+    <mat-card class="card">
+      <mat-card-title>
+        <mat-icon>meeting_room</mat-icon>
+        Room Info
+      </mat-card-title>
+
+      <mat-card-content class="info">
+
+        <div class="row">
+          <span>Name</span>
+          <strong>{{ booking.meetingRoom.name }}</strong>
+        </div>
+
+        <div class="row">
+          <span>Capacity</span>
+          <strong>{{ booking.meetingRoom.capacity }}</strong>
+        </div>
+
+        <div class="row">
+          <span>Location</span>
+          <strong>{{ booking.meetingRoom.location }}</strong>
+        </div>
+
+      </mat-card-content>
+    </mat-card>
+
+  </div>
+
+  <!-- USER + META -->
+  <div class="grid">
+
+    <mat-card class="card">
+      <mat-card-title>
+        <mat-icon>person</mat-icon>
+        User
+      </mat-card-title>
+
+      <mat-card-content class="info">
+
+        <div class="row">
+          <span>Name</span>
+          <strong>{{ booking.user.fullName }}</strong>
+        </div>
+
+        <div class="row">
+          <span>Email</span>
+          <strong>{{ booking.user.email }}</strong>
+        </div>
+
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="card">
+      <mat-card-title>
+        <mat-icon>schedule</mat-icon>
+        Created
+      </mat-card-title>
+
+      <mat-card-content>
+        <strong>{{ booking.createdAt | date:'dd/MM/yyyy HH:mm' }}</strong>
+      </mat-card-content>
+    </mat-card>
+
+  </div>
+
+

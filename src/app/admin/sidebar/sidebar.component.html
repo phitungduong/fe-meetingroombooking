@@ -1,0 +1,54 @@
+<div class="sidebar">
+
+  <!-- Logo -->
+  <div class="logo">
+    <div class="logo-box">ADMIN</div>
+    <span></span>
+  </div>
+
+  <!-- Menu -->
+  <div class="menu">
+
+    <a routerLink="/admin/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+      <div class="icon">
+        <mat-icon>dashboard</mat-icon>
+      </div>
+      Dashboard
+    </a>
+
+    <a routerLink="/admin/users" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+      <div class="icon">
+        <mat-icon>person</mat-icon>
+      </div>
+      User
+    </a>
+
+    <a routerLink="/admin/rooms/room-list" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+      <div class="icon">
+        <mat-icon>meeting_room</mat-icon>
+      </div>
+      Rooms
+    </a>
+
+    <a routerLink="/admin/bookings/booking-list" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+      <div class="icon">
+        <mat-icon>gavel</mat-icon>
+      </div>
+      Bookings
+    </a>
+
+  </div>
+
+  <!-- Bottom -->
+<div class="bottom">
+
+    <a (click)="logout()">
+      <div class="icon">
+        <mat-icon>logout</mat-icon>
+      </div>
+      Logout
+    </a>
+
+  </div>
+
+</div>

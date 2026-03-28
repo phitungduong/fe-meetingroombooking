@@ -1,0 +1,101 @@
+<div class="booking-container">
+
+
+  <div class="booking-list">
+
+   <div *ngIf="bookings?.length === 0">
+  Không có booking nào
+</div>
+
+<div *ngFor="let b of paginatedBookings" class="booking-item">
+  <div class="room"><strong>{{ b.roomName }}</strong> - {{ b.location }}</div>
+  <div class="time">{{ b.startTime | date:'HH:mm' }} - {{ b.endTime | date:'HH:mm' }}</div>
+</div>
+
+<mat-paginator
+  [length]="bookings.length"
+  [pageSize]="pageSize"
+  [pageSizeOptions]="[7, 14, 28]"
+  (page)="onPageChange($event)">
+</mat-paginator>
+  </div>
+
+
+
+  <mat-card class="booking-card">
+
+    <h2>Create Booking</h2>
+
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Room</mat-label>
+      <mat-select [(ngModel)]="bookingForm.meetingRoomId"
+                  (selectionChange)="onRoomOrDateChange()">
+        <mat-option [value]="null">None</mat-option>
+
+        <mat-option *ngFor="let room of rooms" [value]="room.id">
+          {{ room.name }} ({{ room.capacity }} people) - {{ room.location }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+
+    <!-- Date -->
+<mat-form-field appearance="outline" class="full-width">
+  <mat-label>Date</mat-label>
+  <input matInput
+         [matDatepicker]="picker"
+         [(ngModel)]="bookingForm.date"
+         [min]="minDate"
+         (dateChange)="onDateChange()">
+  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-datepicker #picker></mat-datepicker>
+</mat-form-field>
+
+    <div class="time-row">
+
+      <mat-form-field appearance="outline">
+        <mat-label>Start Time</mat-label>
+        <mat-select [(ngModel)]="bookingForm.startTime">
+          <mat-option value="">Select</mat-option>
+          <mat-option *ngFor="let time of timeSlots"
+            [value]="time"
+            [disabled]="isTimeBooked(time)"
+            [class.booked-time]="isTimeBooked(time)">
+            {{ time }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>End Time</mat-label>
+        <mat-select [(ngModel)]="bookingForm.endTime">
+          <mat-option value="">Select</mat-option>
+          <mat-option *ngFor="let time of timeSlots"
+                      [value]="time"
+                      [disabled]="isTimeBooked(time)"
+                      [class.booked-time]="isTimeBooked(time)">
+            {{ time }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+    </div>
+
+
+    <div class="button-group">
+
+      <button mat-button color="warn" (click)="close()">
+        Cancel
+      </button>
+<button mat-raised-button style="background-color: #5f6ec4; color: white;" (click)="createBooking()">
+        Book Room
+      </button>
+
+    </div>
+
+  </mat-card>
+
+</div>
+
+

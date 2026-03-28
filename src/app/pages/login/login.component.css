@@ -1,0 +1,48 @@
+:host {
+        display: flex;
+        justify-content: center;
+        margin: 100px 0px;
+      }
+
+      .mat-form-field {
+        width: 100%;
+        min-width: 300px;
+      }
+
+      mat-card-title,
+      mat-card-content {
+        display: flex;
+        justify-content: center;
+      }
+
+      .button {
+  margin-top: 10px;
+}
+mat-card {
+  max-width: 400px;
+  margin: 80px auto;
+  padding: 20px;
+}
+.register {
+  margin-top: 15px;
+  text-align: center;
+}
+
+.error {
+  color: red;
+}
+.login-btn{
+  width: 100%;
+  transition: all 0.2s ease;
+}
+.login-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+.button-regis {
+  transition: all 0.2s ease;
+}
+.button-regis:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}

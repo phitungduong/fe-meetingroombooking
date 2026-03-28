@@ -1,0 +1,57 @@
+<h2 mat-dialog-title>Create Booking</h2>
+
+<div mat-dialog-content [formGroup]="form">
+
+  <!-- Room -->
+  <mat-form-field appearance="outline" style="width:100%">
+    <mat-label>Room</mat-label>
+    <mat-select formControlName="meetingRoomId" (selectionChange)="onChange()">
+      <mat-option *ngFor="let r of rooms" [value]="r.id">
+        {{ r.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <!-- Date -->
+  <mat-form-field appearance="outline" style="width:100%">
+    <mat-label>Date</mat-label>
+    <input matInput type="date" formControlName="date" (change)="onChange()">
+  </mat-form-field>
+
+ <!-- TIME ROW -->
+<div class="time-row">
+
+  <!-- Start -->
+  <mat-form-field appearance="outline">
+    <mat-label>Start Time</mat-label>
+    <mat-select formControlName="startTime">
+      <mat-option *ngFor="let t of timeSlots"
+                  [value]="t"
+                  [disabled]="isTimeBooked(t)">
+        {{ t }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <!-- End -->
+  <mat-form-field appearance="outline" >
+    <mat-label>End Time</mat-label>
+    <mat-select formControlName="endTime">
+      <mat-option *ngFor="let t of timeSlots"
+                  [value]="t"
+                  [disabled]="isTimeBooked(t)">
+        {{ t }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+</div>
+
+</div>
+
+<div mat-dialog-actions align="end">
+  <button mat-button color="warn" (click)="close()">Cancel</button>
+  <button mat-raised-button style="background-color: #5f6ec4; color: white;" (click)="submit()">
+    Create
+  </button>
+</div>

@@ -1,0 +1,69 @@
+<h1>Meeting Rooms</h1>
+
+<button mat-raised-button style="background-color: #5f6ec4; color: white;" (click)="openCreate()">
+  Create Room
+</button>
+
+<br /><br />
+
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef> ID </th>
+    <td mat-cell *matCellDef="let room"> {{ room.id }} </td>
+  </ng-container>
+
+  <!-- Room Name -->
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef > <h4>Room</h4> </th>
+    <td mat-cell *matCellDef="let room"> {{ room.name }} </td>
+  </ng-container>
+
+  <!-- Capacity -->
+  <ng-container matColumnDef="capacity">
+    <th mat-header-cell *matHeaderCellDef> <h4>Capacity</h4> </th>
+    <td mat-cell *matCellDef="let room"> {{ room.capacity }} </td>
+  </ng-container>
+
+  <!-- Location -->
+  <ng-container matColumnDef="location">
+    <th mat-header-cell *matHeaderCellDef > <h4>Location</h4> </th>
+    <td mat-cell *matCellDef="let room"> {{ room.location }} </td>
+  </ng-container>
+
+  <!-- Status -->
+  <ng-container matColumnDef="status">
+  <th mat-header-cell *matHeaderCellDef>
+    <h4>Status</h4>
+  </th>
+  <td mat-cell *matCellDef="let room">
+    <span [ngClass]="room.status === 'Active' ? 'active' : 'inactive'">
+  {{ room.status }}
+</span>
+  </td>
+</ng-container>
+  <!-- Actions -->
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef> <h4>Action</h4> </th>
+    <td mat-cell *matCellDef="let room">
+      <button mat-icon-button color="primary" (click)="openEdit(room)">
+        <mat-icon>edit</mat-icon>
+      </button>
+
+      <button mat-icon-button color="warn" (click)="deleteRoom(room.id)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+
+  <!-- Header + Row -->
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+</table>
+
+<!-- Paginator -->
+<mat-paginator
+  [pageSize]="10"
+  [pageSizeOptions]="[ 10, 20]"
+  showFirstLastButtons>
+</mat-paginator>

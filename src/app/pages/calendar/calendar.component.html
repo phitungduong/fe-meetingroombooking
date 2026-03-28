@@ -1,0 +1,67 @@
+<div class="calendar-wrapper">
+
+  <!-- HEADER -->
+
+<div class="calendar-page">
+
+  <!-- LEFT 30% -->
+  <div class="left-panel">
+
+    <!-- ROOM LIST (TRÊN) -->
+   <div class="room-grid">
+
+  <mat-card
+    *ngFor="let room of rooms"
+    (click)="selectRoom(room)"
+    [class.active]="room.id === selectedRoomId"
+    class="room-card" style="border-radius: 15px;">
+
+    <div class="room-name">
+      {{ room.name }}
+    </div>
+
+    <div class="room-info">
+      <span>
+        <mat-icon>groups</mat-icon>
+
+      </span>
+      <span>
+        <mat-icon></mat-icon>
+     {{ room.capacity }} people - {{ room.location }}
+      </span>
+    </div>
+
+  </mat-card>
+
+</div>
+
+    <!-- mini calendar (DƯỚI) -->
+     <div class="mini-calendar">
+      <mat-calendar
+        [(selected)]="selectedDate"
+        (selectedChange)="onDateChange($event)">
+      </mat-calendar>
+    </div>
+
+  </div>
+
+  <!-- RIGHT 70% -->
+  <div class="right-panel">
+
+
+    <full-calendar
+      #calendar
+      [options]="calendarOptions">
+    </full-calendar>
+
+  </div>
+<button
+  mat-fab
+  color="primary"
+  class="btn-book"
+  (click)="goToBooking()">
+  <mat-icon>add</mat-icon>
+</button>
+</div>
+
+</div>

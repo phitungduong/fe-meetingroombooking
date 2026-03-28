@@ -1,0 +1,439 @@
+
+:host ::ng-deep .fc-event {
+  border-radius: 6px;
+  padding: 2px;
+  font-size: 12px;
+}
+
+:host ::ng-deep .fc-timegrid-slot {
+  height: 40px;
+  border-bottom: 1px solid #eee;
+}
+
+:host ::ng-deep .fc-timegrid-slot-label {
+  font-size: 12px;
+  color: #666;
+}
+.calendar-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
+}
+
+
+.section-title {
+
+  color: #5f6ec4;
+  font-weight: 900!important;
+}
+.fc-event {
+  background-color: #8a9cff !important;
+  border: none !important;
+  color: white !important;
+  border-radius: 8px !important;
+  padding: 2px 6px;
+  font-size: 13px;
+}
+
+
+.fc .fc-event-time {
+  font-size: 15px;
+  color: #ffffff;
+}
+
+
+.fc .fc-event-title {
+  font-size: 15px;
+font-weight: 500;
+  color: #ffffff;
+}
+
+.fc {
+  background: white;
+  border-radius: 12px;
+  padding: 6px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+.fc-toolbar-title {
+  font-size: 22px;
+  font-weight: 600;
+  color: #344083;
+}
+
+.fc-button {
+  background-color: #ffffff !important;
+  border: none !important;
+  border-radius: 6px !important;
+  padding: 6px 10px !important;
+  color: #5f6ec4 !important;
+  border: 1px solid #5f6ec4 !important;
+  transition: all 0.2s ease;
+
+}
+.fc .fc-myWeek-button,
+.fc .fc-myDay-button {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: #ffffff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  transition: all 0.2s ease;
+}
+
+.fc .fc-myWeek-button:hover,
+.fc .fc-myDay-button:hover {
+  background: #f1f3f4;
+  transform: scale(1.05);
+}
+
+/* active */
+.fc .fc-button-active {
+  background:#5f6ec4  !important;
+  color: white !important;
+}
+.fc-button:hover {
+
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+.fc-daygrid-day {
+  transition: 0.2s;
+}
+
+.fc .fc-timegrid-axis-frame{
+  display: none;
+}
+
+.fc-daygrid-day:hover {
+  background-color: #f5f3ff;
+}
+.fc-day-today {
+  background-color: #ede9fe !important;
+}
+.fc-theme-standard td,
+.fc-theme-standard th {
+  border: 1px solid #f1f1f1;
+}
+
+.fc .fc-timegrid-slot {
+  height: 60px;
+}
+
+
+.fc .fc-timegrid-slot-lane {
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.fc-timegrid-axis {
+  font-size: 12px;
+  color: #666;
+}
+.fc-scroller {
+  scrollbar-width: thin;
+}
+
+.fc-scroller::-webkit-scrollbar {
+  width: 6px;
+}
+
+.fc-scroller::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 10px;
+}
+.fc-direction-ltr .fc-button-group > .fc-button:not(:first-child) {
+  margin-left: 4px;
+}
+
+
+
+.fc .fc-daygrid-day-frame {
+    display: none;
+}
+.fc .fc-timegrid-axis-cushion,
+.fc .fc-timegrid-slot-label-cushion {
+    padding: 0px 20px;
+    color: #5f6ec4;
+    text-align: center;
+    font-weight: 600;
+}
+.fc .fc-col-header-cell-cushion {
+    display: inline-block;
+    padding: 20px 4px;
+    color: #5f6ec4;
+    text-align: center;
+    font-weight: 600;
+}
+.fc .fc-col-header-cell {
+  text-align: center;
+  font-family: 'Segoe UI', sans-serif;
+  color: #4a58a8;
+}
+
+.fc .fc-col-header-cell-cushion {
+  text-decoration: none;
+  color: #4a58a8;
+}
+
+
+
+.fc .fc-col-header-cell {
+  border: none !important;
+}
+
+
+
+
+
+.calendar-page {
+  display: flex;
+  height: 100vh;
+  gap: 12px;
+  padding: 10px;
+}
+
+
+.left-panel {
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ROOM LIST */
+/* CARD */
+/* GRID 2 CỘT */
+.room-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr ;
+  gap: 12px;
+}
+
+/* CARD */
+
+.room-card {
+  padding: 10px;
+  border-radius: 15px;
+  border: 1px solid #5f6ec4;
+  transition: 0.25s;
+  color: #5f6ec4;
+}
+
+/* HOVER */
+.room-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  color: #ffffff;
+  background: #8a9cff ;
+}
+
+/* ACTIVE  */
+.room-card.active {
+  background-color: #8a9cff ;
+  color: white;
+  border: none;
+}
+
+/* TÊN ROOM */
+.room-name {
+  font-weight: 700;
+  font-size: 14px;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+
+/* INFO */
+.room-info {
+  display: flex;
+  gap: 12px;
+  font-size: 13px;
+
+  align-items: center;
+  justify-content: center;
+
+}
+
+/* ICON */
+.room-info mat-icon {
+  margin-right: -15px;
+  
+}
+
+/* ACTIVE override */
+.room-card.active .room-info {
+  color: #ffffff;
+}
+
+/* MINI CALENDAR */
+.mini-calendar {
+  background: white;
+  border-radius: 12px;
+  padding: 10px;
+  flex: 1;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+.mat-calendar-body-selected {
+    background-color: #7180d8 ;
+    color: #fff;
+}
+
+/* RIGHT 70% */
+.right-panel {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+}
+
+.right-panel full-calendar {
+  flex: 1;
+}
+.btn-logout {
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: none;
+  background: #ff5252;
+  color: white;
+  cursor: pointer;
+}
+/* HEADER CONTAINER */
+.header {
+  height: 64px;
+  background: #ffffff;
+  border-bottom: 1px solid #eaeaf0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+/* LEFT */
+.header-left h2 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #5f6ec4;
+  margin: 0;
+  letter-spacing: 0.3px;
+}
+
+/* RIGHT */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+/* LOGIN BUTTON */
+.btn-login {
+  padding: 6px 18px;
+  border-radius: 20px;
+  border: 1px solid #5f6ec4;
+  background: transparent;
+  color: #5f6ec4;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.btn-login:hover {
+  background: #5f6ec4;
+  color: white;
+}
+
+/* USER BLOCK */
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #f7f8ff;
+  padding: 6px 10px;
+  border-radius: 30px;
+}
+
+/* USER NAME */
+.user-info span {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+}
+
+/* AVATAR */
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #5f6ec4, #8a9cff);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+/* LOGOUT BUTTON */
+.btn-logout {
+  border: none;
+  background: transparent;
+  color: #ff4d4f;
+  font-size: 13px;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 6px;
+  transition: 0.2s;
+}
+
+.btn-logout:hover {
+  background: #ffecec;
+}
+
+
+/* POSITION */
+.btn-book {
+  position: fixed !important;
+  bottom: 30px !important;
+  right: 70px !important;
+
+  left: auto !important;
+  transform: none !important;
+
+  z-index: 999999 !important;
+  transition: 0.2s;
+}
+.btn-book:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* FIX MATERIAL FAB */
+.btn-book .mdc-fab__surface {
+  background: linear-gradient(135deg, #5f6ec4, #8a9cff) !important;
+  color: #fff !important;
+}
+
+/* SIZE */
+.btn-book.mat-mdc-fab {
+  width: 60px;
+  height: 60px;
+}
+
+/* ICON */
+
+
+/* SHADOW */
+.btn-book {
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+}
+
+/* HOVER */
+.btn-book:hover .mdc-fab__surface {
+  transform: scale(1.08);
+  transition: 0.2s;
+}
+
+/* ACTIVE CLICK */
+.btn-book:active .mdc-fab__surface {
+  transform: scale(0.95);
+}

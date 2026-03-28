@@ -1,0 +1,99 @@
+<div class="back-btn" (click)="goBack()">
+  <mat-icon>arrow_back</mat-icon>
+</div>
+<div class="page-container">
+
+
+  <!-- LEFT: PROFILE -->
+  <div class="left-panel" [class.shrink]="selectedBookingId">
+
+    <div class="profile-page">
+
+      <!-- USER PROFILE -->
+      <h2 class="section-title">User Profile</h2>
+
+      <div class="user-card">
+        <div class="user-avatar">
+          {{ userService.getFullName()?.charAt(0) }}
+        </div>
+
+        <div class="user-info">
+          <p class="name">{{ userService.getFullName() }}</p>
+          <p class="email">{{ userService.getEmail() }}</p>
+        </div>
+      </div>
+
+     
+      <!-- BOOKING -->
+      <h2 class="section-title">Booking History</h2>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Room</th>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let b of bookings">
+              <td>{{ b.meetingRoom?.name }}</td>
+              <td>{{ b.startTime | date:'dd/MM/yyyy' }}</td>
+
+              <td>
+                {{ b.startTime | date:'HH:mm' }} -
+                {{ b.endTime | date:'HH:mm' }}
+              </td>
+
+              <td>
+                <span [ngClass]="b.status">
+                  {{ getStatusText(b.status) }}
+                </span>
+              </td>
+
+              <td class="action-buttons">
+                <button mat-icon-button style=" color: #5f6ec4;"
+                        (click)="viewDetail(b.id)">
+                  <mat-icon>visibility</mat-icon>
+                </button>
+
+                <button mat-icon-button color="warn"
+                        [style.visibility]="b.status === 'Booked' ? 'visible' : 'hidden'"
+                        (click)="cancelBooking(b.id)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- pagination giữ nguyên -->
+         <div class="pagination">
+      <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">Prev</button>
+
+      <button *ngFor="let p of [].constructor(totalPages); let i = index" [class.active]="currentPage === i+1"
+        (click)="goToPage(i+1)">
+        {{ i + 1 }}
+      </button>
+
+      <button (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages">Next</button>
+    </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- RIGHT: BOOKING DETAIL -->
+  <div class="right-panel" *ngIf="selectedBookingId">
+    <app-booking-detail
+      [bookingId]="selectedBookingId"
+      (close)="closeDetail()">
+    </app-booking-detail>
+  </div>
+
+</div>

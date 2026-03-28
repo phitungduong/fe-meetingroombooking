@@ -1,0 +1,38 @@
+<h1>Meeting Rooms</h1>
+
+<table class="room-table">
+
+  <thead>
+    <tr>
+      <th>Room</th>
+      <th>Capacity</th>
+      <th>Location</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+
+  <tbody>
+
+    <tr *ngFor="let room of rooms">
+
+      <td>{{room.name}}</td>
+      <td>{{room.capacity}}</td>
+      <td>{{room.location}}</td>
+
+      <!-- <td>
+        <span [ngClass]="room.isAvailable ? 'available' : 'busy'">
+          {{room.isAvailable ? 'Available' : 'Busy'}}
+        </span>
+      </td> -->
+
+      <td>
+        <button mat-stroked-button color="primary" class="button-booking" (click)="bookRoom(room.id)">
+          Book
+        </button>
+      </td>
+
+    </tr>
+
+  </tbody>
+
+</table>

@@ -1,0 +1,52 @@
+<div class="container">
+  <h1>User List</h1>
+
+  <button mat-raised-button style="background-color: #5f6ec4;color: white;" (click)="openCreateUser()">
+    Create User
+  </button>
+
+  <br /><br />
+
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+    <!-- ID -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> ID </th>
+      <td mat-cell *matCellDef="let user"> {{ user.id }} </td>
+    </ng-container>
+
+    <!-- Username -->
+    <ng-container matColumnDef="userName">
+      <th mat-header-cell *matHeaderCellDef> Username </th>
+      <td mat-cell *matCellDef="let user"> {{ user.userName }} </td>
+    </ng-container>
+
+    <!-- Email -->
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef> Email </th>
+      <td mat-cell *matCellDef="let user"> {{ user.email }} </td>
+    </ng-container>
+
+    <!-- Actions -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> Action </th>
+      <td mat-cell *matCellDef="let user">
+        <button mat-icon-button color="warn" (click)="deleteUser(user.id)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <!-- Header + Row -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+  </table>
+
+  <!-- Paginator -->
+  <mat-paginator
+    [pageSize]="10"
+    [pageSizeOptions]="[ 10, 20]"
+    showFirstLastButtons>
+  </mat-paginator>
+</div>
