@@ -29,21 +29,21 @@ export class UpdateBookingComponent implements OnInit {
 
  ngOnInit(): void {
 
-  console.log('DATA:', this.data); // 👈 debug ngay
+  const start = new Date(this.data.startTime);
+  const end = new Date(this.data.endTime);
 
   this.form = this.fb.group({
-  meetingRoomId: [this.data?.meetingRoomId, Validators.required],
-  date: [new Date(this.data?.startTime), Validators.required],
-  startTime: [this.formatTime(this.data?.startTime), Validators.required],
-  endTime: [this.formatTime(this.data?.endTime), Validators.required],
-  status: [this.data?.status || 'Booked']
-});
+    meetingRoomId: [this.data.meetingRoomId, Validators.required],
+    date: [start, Validators.required],
+    startTime: [this.formatTime(start), Validators.required],
+    endTime: [this.formatTime(end), Validators.required],
+    status: [this.data.status || 'Booked']
+  });
 
   this.loadRooms();
   this.generateTimeSlots();
   this.loadBookedSlots();
 }
-
   // 🔥 format date yyyy-MM-dd
   formatDate(date: any): string {
   if (!date) return '';
@@ -61,9 +61,10 @@ export class UpdateBookingComponent implements OnInit {
 
   const d = new Date(date);
 
-  if (isNaN(d.getTime())) return '';
+  const hours = d.getHours().toString().padStart(2, '0');
+  const minutes = d.getMinutes().toString().padStart(2, '0');
 
-  return d.toISOString().substring(11, 16);
+  return `${hours}:${minutes}`;
 }
 
   loadRooms() {
@@ -120,7 +121,12 @@ export class UpdateBookingComponent implements OnInit {
     return slotTime >= start && slotTime < end;
   });
 }
-
+toLocalISOString(date: Date): string {
+  const tzOffset = date.getTimezoneOffset() * 60000;
+  return new Date(date.getTime() - tzOffset)
+    .toISOString()
+    .slice(0, -1); // bỏ chữ Z
+}
  submit() {
   if (this.form.invalid) return;
 
@@ -135,11 +141,11 @@ export class UpdateBookingComponent implements OnInit {
   end.setHours(eh, em, 0, 0);
 
   const payload = {
-    meetingRoomId,
-    startTime: start,
-    endTime: end,
-    status
-  };
+  meetingRoomId,
+  startTime: this.toLocalISOString(start), // 🔥 FIX
+  endTime: this.toLocalISOString(end),     // 🔥 FIX
+  status
+};
 
   this.bookingService.updateBookingAdmin(this.data.id, payload)
     .subscribe({

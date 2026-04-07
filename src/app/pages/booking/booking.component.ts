@@ -127,11 +127,11 @@ formatDateLocal(date: Date): string {
   // =========================
   // LOAD DATA
   // =========================
-  loadRooms() {
-    this.roomService.getRooms().subscribe((res: any) => {
-      this.rooms = res.data;
-    });
-  }
+ loadRooms() {
+  this.roomService.getRooms().subscribe((res: any) => {
+    this.rooms = res.data.filter((r: any) => r.isActive === true);
+  });
+}
 
   generateTimeSlots() {
     this.timeSlots = [];

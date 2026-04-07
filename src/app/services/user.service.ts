@@ -58,9 +58,15 @@ export class UserService {
 
   // Lấy email
   getEmail(): string {
-  return this.user?.[
-    'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress'
-  ];
+    const token = sessionStorage.getItem('token');
+
+    if (!token) return '';
+
+    const decoded: any = jwtDecode(token);
+
+    return decoded[
+      'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress'
+    ];
 }
 
   // Logout

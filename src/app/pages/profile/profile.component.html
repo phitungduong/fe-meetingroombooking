@@ -14,16 +14,16 @@
 
       <div class="user-card">
         <div class="user-avatar">
-          {{ userService.getFullName()?.charAt(0) }}
+          {{ authService.getFullName()?.charAt(0) }}
         </div>
 
         <div class="user-info">
-          <p class="name">{{ userService.getFullName() }}</p>
-          <p class="email">{{ userService.getEmail() }}</p>
+          <p class="name">{{ authService.getFullName() }}</p>
+          <p class="email">{{ authService.getEmail() }}</p>
         </div>
       </div>
 
-     
+
       <!-- BOOKING -->
       <h2 class="section-title">Booking History</h2>
 

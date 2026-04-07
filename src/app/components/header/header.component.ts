@@ -12,7 +12,7 @@ import { UserService } from 'src/app/services/user.service';
 export class HeaderComponent implements OnInit {
 
   constructor(
-    private authService: AuthService,
+    public authService: AuthService,
     private router: Router,
     private toastr: ToastrService,
     public userService: UserService
@@ -24,10 +24,10 @@ logout() {
     this.authService.logout(); // nếu có
 
     // nếu chưa có thì dùng:
-    sessionStorage.removeItem('token');
-    sessionStorage.removeItem('role');
+    localStorage.removeItem('token');
+    localStorage.removeItem('role');
 
-   
+
 
     this.router.navigate(['/login']);
   }

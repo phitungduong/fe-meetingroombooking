@@ -10,6 +10,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { ConfirmDialogComponent } from 'src/app/shared/confirm-dialog/confirm-dialog.component';
 import { UpdateBookingComponent } from '../update-booking/update-booking.component';
+import { CalendarStateService } from 'src/app/services/calendar-state.service';
 
 @Component({
   selector: 'app-bookings',
@@ -46,7 +47,8 @@ export class BookingsComponent implements OnInit {
     private bookingService: BookingService,
     private router: Router,
     private dialog: MatDialog,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private calendarState: CalendarStateService
 
   ) {}
 
@@ -178,9 +180,24 @@ openUpdateDialog(booking: any) {
 
   dialogRef.afterClosed().subscribe(result => {
     if (result) {
-      this.getBookings(); // reload
+      this.getBookings();
+      this.calendarState.triggerRefresh(); // reload
       this.toastr.success('Booking updated');
     }
   });
+}
+
+refresh() {
+  // reset filter
+  this.selectedRoom = '';
+  this.userFilter = '';
+  this.selectedDate = null;
+  this.fromDate = null;
+  this.toDate = null;
+
+  // reload data từ server
+  this.getBookings();
+
+  this.toastr.info('Data refreshed');
 }
 }

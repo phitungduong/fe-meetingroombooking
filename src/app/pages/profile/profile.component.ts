@@ -34,7 +34,7 @@ export class ProfileComponent implements OnInit {
     private matDividerModule: MatDividerModule,
     private matButtonModule: MatButtonModule,
     private dialog: MatDialog,
-    private authService: AuthService
+    public authService: AuthService
   ) {}
 
   ngOnInit(): void {

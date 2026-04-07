@@ -2,17 +2,17 @@
 
   <div class="header-left">
     <h1 class="logo" routerLink="/calendar">
-  Calendar
+  MeetingRoom Booking
 </h1>
   </div>
 
   <div class="user-header">
   <div class="user-info">
     <div class="user-name">
-      {{ userService.getFullName() }}
+      {{ authService.getFullName() }}
     </div>
     <div class="user-email">
-      {{ userService.getEmail() }}
+      {{ authService.getEmail() }}
     </div>
   </div>
 
