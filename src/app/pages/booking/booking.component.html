@@ -27,17 +27,19 @@
     <h2>Create Booking</h2>
 
 
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Room</mat-label>
-      <mat-select [(ngModel)]="bookingForm.meetingRoomId"
-                  (selectionChange)="onRoomOrDateChange()">
-        <mat-option [value]="null">None</mat-option>
+   <mat-form-field appearance="outline" class="full-width">
+  <mat-label>Rooms</mat-label>
 
-        <mat-option *ngFor="let room of rooms" [value]="room.id">
-          {{ room.name }} ({{ room.capacity }} people) - {{ room.location }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+  <mat-select
+    [(ngModel)]="bookingForm.meetingRoomIds"
+    multiple
+    (selectionChange)="onRoomOrDateChange()"
+  >
+    <mat-option *ngFor="let room of rooms" [value]="room.id">
+      {{ room.name }} ({{ room.capacity }} people) - {{ room.location }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
 
 
     <!-- Date -->

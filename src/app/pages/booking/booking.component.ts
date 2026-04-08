@@ -31,11 +31,12 @@ export class BookingComponent implements OnInit, OnDestroy {
 
 
   bookingForm = {
-    meetingRoomId: 0,
-    date: null as Date | null,
-    startTime: '',
-    endTime: '',
-  };
+  meetingRoomId: 0,          // giữ lại cho backward
+  meetingRoomIds: [] as number[], // thêm dòng này
+  date: null as Date | null,
+  startTime: '',
+  endTime: '',
+};
 
   minDate: string = '';
   private bookingChangedSub!: Subscription;
@@ -239,10 +240,15 @@ onDateChange() {
     const end = new Date(year, month - 1, day, endHour, endMinute);
 
     const booking = {
-      meetingRoomId: this.bookingForm.meetingRoomId,
-      startTime: start,
-      endTime: end,
-    };
+  meetingRoomId: this.bookingForm.meetingRoomIds.length === 1
+    ? this.bookingForm.meetingRoomIds[0]
+    : null,
+
+  meetingRoomIds: this.bookingForm.meetingRoomIds,
+
+  startTime: start,
+  endTime: end,
+};
 
     this.bookingService.createBooking(booking).subscribe({
       next: () => {
