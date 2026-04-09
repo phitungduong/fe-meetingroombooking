@@ -61,7 +61,7 @@ ngOnInit() {
 
   if (this.data) {
 
-   
+
     if (this.data.roomId) {
       this.bookingForm.meetingRoomId = this.data.roomId;
 
@@ -214,6 +214,8 @@ onDateChange() {
 
   const slotTime = new Date(this.bookingForm.date);
   slotTime.setHours(hour, minute, 0, 0);
+  const now = new Date();
+  if (slotTime < now) return true;
 
   return this.bookedSlots.some((b: any) => {
     const start = new Date(b.startTime);

@@ -16,7 +16,7 @@ export class SidebarComponent implements OnInit {
 logout(): void {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '300px',
-      data: { message: 'Are you sure you want to logout?' },
+      data: { message: 'Bạn có chắc chắn muốn đăng xuất?' },
     });
 
     dialogRef.afterClosed().subscribe((result) => {

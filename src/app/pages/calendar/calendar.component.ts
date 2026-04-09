@@ -180,7 +180,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     this.dialog.open(BookingComponent, {
       width: '900px',
       data: {
-        roomId: [roomId],
+        roomId: roomId,
         date: new Date(), // 👉 mặc định hôm nay
       },
     });

@@ -20,7 +20,7 @@ import { CalendarStateService } from 'src/app/services/calendar-state.service';
 export class BookingsComponent implements OnInit {
   bookings: any[] = [];
   rooms: any[] = [];
-  selectedRoom: string = '';
+  selectedRooms: string[] = [];
   userFilter: string = '';
   originalData: any[] = [];
   selectedDate: Date | null = null;
@@ -73,7 +73,27 @@ export class BookingsComponent implements OnInit {
     this.sort.active = 'date';
     this.sort.direction = 'desc'; // từ tương lai -> quá khứ
   }
+onRoomChange(event: any) {
+  const values = event.value;
 
+  // 👉 Nếu user click ALL
+  if (values.includes('ALL')) {
+    this.selectedRooms = ['ALL', ...this.rooms];
+  } else {
+    // 👉 Nếu bỏ ALL
+    this.selectedRooms = values.filter((v: any) => v !== 'ALL');
+  }
+
+  // 👉 Nếu user chọn đủ tất cả room → auto thêm ALL
+  const onlyRooms = this.selectedRooms.filter(v => v !== 'ALL');
+
+  if (onlyRooms.length === this.rooms.length) {
+    this.selectedRooms = ['ALL', ...this.rooms];
+  }
+
+  // 👉 gọi filter
+  this.applyFilter();
+}
   getBookings() {
     this.bookingService.getAllBookings().subscribe((res: any) => {
       const data = res.data;
@@ -127,27 +147,39 @@ export class BookingsComponent implements OnInit {
     }
   });
 }
-  applyFilter() {
+normalize(text: string): string {
+  return text
+    .toLowerCase()
+    .normalize('NFD') // tách dấu
+    .replace(/[\u0300-\u036f]/g, ''); // xoá dấu
+}
+ applyFilter() {
   let filtered = this.originalData;
 
   // 🏢 Filter room
-  if (this.selectedRoom) {
+  if (
+    this.selectedRooms &&
+    this.selectedRooms.length > 0 &&
+    !this.selectedRooms.includes('ALL') // 👈 sửa chỗ này
+  ) {
     filtered = filtered.filter(b =>
-      b.meetingRoom.name === this.selectedRoom
+      this.selectedRooms.includes(b.meetingRoom.name)
     );
   }
 
   // 👤 Filter user
-  if (this.userFilter) {
-    const keyword = this.userFilter.toLowerCase();
+  if (this.userFilter && this.userFilter.trim()) {
+  const keyword = this.normalize(this.userFilter.trim());
 
-    filtered = filtered.filter(b =>
-      b.user.fullName.toLowerCase().includes(keyword) ||
-      b.user.email.toLowerCase().includes(keyword)
-    );
-  }
+  filtered = filtered.filter(b => {
+    const fullName = this.normalize(b.user?.fullName || '');
+    const email = this.normalize(b.user?.email || '');
 
-  // 📅 Filter 1 ngày cụ thể
+    return fullName.includes(keyword) || email.includes(keyword);
+  });
+}
+
+  // 📅 Filter 1 ngày
   if (this.selectedDate) {
     const selected = new Date(this.selectedDate).toDateString();
 
@@ -164,7 +196,7 @@ export class BookingsComponent implements OnInit {
     });
   }
 
-  // 🔥 sort lại
+  // 🔥 sort
   filtered.sort((a: any, b: any) =>
     new Date(b.startTime).getTime() - new Date(a.startTime).getTime()
   );
@@ -189,7 +221,7 @@ openUpdateDialog(booking: any) {
 
 refresh() {
   // reset filter
-  this.selectedRoom = '';
+  this.selectedRooms = [];
   this.userFilter = '';
   this.selectedDate = null;
   this.fromDate = null;

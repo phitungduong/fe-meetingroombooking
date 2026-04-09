@@ -5,14 +5,23 @@
 
     <!-- Filter Room -->
     <mat-form-field appearance="outline">
-      <mat-label>Room</mat-label>
-      <mat-select [(value)]="selectedRoom" (selectionChange)="applyFilter()">
-        <mat-option value="">All</mat-option>
-        <mat-option *ngFor="let room of rooms" [value]="room">
-          {{ room }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+  <mat-label>Rooms</mat-label>
+
+  <mat-select
+    [(ngModel)]="selectedRooms"
+    multiple
+    (selectionChange)="applyFilter()"
+  >
+   <mat-select-trigger>
+    {{ selectedRooms.length > 0 ? selectedRooms.join(', ') : 'All rooms' }}
+  </mat-select-trigger>
+   
+
+    <mat-option *ngFor="let room of rooms" [value]="room">
+      {{ room }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
 
     <!-- Filter User -->
     <mat-form-field appearance="outline">

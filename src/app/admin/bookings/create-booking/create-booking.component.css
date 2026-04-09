@@ -10,10 +10,14 @@
 
 /* TIME ROW (START + END SAME LINE) */
 .time-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-  width: 100%;
+  display: flex;
+  gap: 10px;
+}
+
+.booked-time {
+  color: #d32f2f !important;
+  background-color: #ffebee;
+  font-weight: 500;
 }
 
 /* FORM FIELD FULL WIDTH */
@@ -52,7 +56,7 @@ mat-form-field {
 /* RESPONSIVE */
 @media (max-width: 600px) {
   .time-row {
-    grid-template-columns: 1fr;
+    flex-direction: column;
   }
 
   .mat-mdc-dialog-content {
