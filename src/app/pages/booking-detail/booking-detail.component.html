@@ -8,118 +8,115 @@
       <span class="sub">Booking Detail</span>
     </div>
 
-    <mat-chip class="status-chip"
-          [ngClass]="booking.status.toLowerCase()">
-  {{ booking.status }}
-</mat-chip>
+    <mat-chip class="status-chip" [ngClass]="booking.status.toLowerCase()">
+      {{ booking.status }}
+    </mat-chip>
 
-      <!-- 🔥 NÚT ĐÓNG -->
-      <button mat-icon-button (click)="close.emit()">
-        <mat-icon>close</mat-icon>
-      </button>
-    </div>
-
+    <!-- 🔥 NÚT ĐÓNG -->
+    <button mat-icon-button (click)="close.emit()">
+      <mat-icon>close</mat-icon>
+    </button>
   </div>
 
-  <!-- GRID -->
-  <div class="grid">
+</div>
 
-    <!-- BOOKING -->
-    <mat-card class="card">
-      <mat-card-title>
-        <mat-icon>event</mat-icon>
-        Booking Info
-      </mat-card-title>
+<!-- GRID -->
+<div class="grid">
 
-      <mat-card-content class="info">
+  <!-- BOOKING -->
+  <mat-card class="card">
+    <mat-card-title>
+      <mat-icon>event</mat-icon>
+      Booking Info
+    </mat-card-title>
 
-        <div class="row">
-          <span>Date</span>
-          <strong>{{ booking?.startTime | date:'dd/MM/yyyy' }}</strong>
-        </div>
+    <mat-card-content class="info">
 
-        <div class="row">
-          <span>Time</span>
-          <strong>
-            {{ booking.startTime | date:'HH:mm' }} -
-            {{ booking.endTime | date:'HH:mm' }}
-          </strong>
-        </div>
+      <div class="row">
+        <span>Date</span>
+        <strong>{{ booking?.startTime | date:'dd/MM/yyyy' }}</strong>
+      </div>
 
-        <div class="row">
-          <span>Duration</span>
-          <strong>
-            {{ getDuration(booking.startTime, booking.endTime) }} hours
-          </strong>
-        </div>
+      <div class="row">
+        <span>Time</span>
+        <strong>
+          {{ booking.startTime | date:'HH:mm' }} -
+          {{ booking.endTime | date:'HH:mm' }}
+        </strong>
+      </div>
 
-      </mat-card-content>
-    </mat-card>
+      <div class="row">
+        <span>Duration</span>
+        <strong>
+          {{ getDuration(booking.startTime, booking.endTime) }} hours
+        </strong>
+      </div>
 
-    <!-- ROOM -->
-    <mat-card class="card">
-      <mat-card-title>
-        <mat-icon>meeting_room</mat-icon>
-        Room Info
-      </mat-card-title>
+    </mat-card-content>
+  </mat-card>
 
-      <mat-card-content class="info">
+  <!-- ROOM -->
+  <mat-card class="card">
+    <mat-card-title>
+      <mat-icon>meeting_room</mat-icon>
+      Room Info
+    </mat-card-title>
 
-        <div class="row">
-          <span>Name</span>
-          <strong>{{ booking.meetingRoom.name }}</strong>
-        </div>
+    <mat-card-content class="info">
 
-        <div class="row">
-          <span>Capacity</span>
-          <strong>{{ booking.meetingRoom.capacity }}</strong>
-        </div>
+      <div class="row">
+        <span>Name</span>
+        <strong>{{ booking.meetingRoom.name }}</strong>
+      </div>
 
-        <div class="row">
-          <span>Location</span>
-          <strong>{{ booking.meetingRoom.location }}</strong>
-        </div>
+      <div class="row">
+        <span>Capacity</span>
+        <strong>{{ booking.meetingRoom.capacity }}</strong>
+      </div>
 
-      </mat-card-content>
-    </mat-card>
+      <div class="row">
+        <span>Location</span>
+        <strong>{{ booking.meetingRoom.location }}</strong>
+      </div>
 
-  </div>
+    </mat-card-content>
+  </mat-card>
 
-  <!-- USER + META -->
-  <div class="grid">
+</div>
 
-    <mat-card class="card">
-      <mat-card-title>
-        <mat-icon>person</mat-icon>
-        User
-      </mat-card-title>
+<!-- USER + META -->
+<div class="grid">
 
-      <mat-card-content class="info">
+  <mat-card class="card">
+    <mat-card-title>
+      <mat-icon>person</mat-icon>
+      User
+    </mat-card-title>
 
-        <div class="row">
-          <span>Name</span>
-          <strong>{{ booking.user.fullName }}</strong>
-        </div>
+    <mat-card-content class="info">
 
-        <div class="row">
-          <span>Email</span>
-          <strong>{{ booking.user.email }}</strong>
-        </div>
+      <div class="row">
+        <span>Name</span>
+        <strong>{{ booking.user.fullName }}</strong>
+      </div>
 
-      </mat-card-content>
-    </mat-card>
+      <div class="row">
+        <span>Email</span>
+        <strong>{{ booking.user.email }}</strong>
+      </div>
 
-    <mat-card class="card">
-      <mat-card-title>
-        <mat-icon>schedule</mat-icon>
-        Created
-      </mat-card-title>
+    </mat-card-content>
+  </mat-card>
 
-      <mat-card-content>
-        <strong>{{ booking.createdAt | date:'dd/MM/yyyy HH:mm' }}</strong>
-      </mat-card-content>
-    </mat-card>
+  <mat-card class="card">
+    <mat-card-title>
+      <mat-icon>schedule</mat-icon>
+      Created
+    </mat-card-title>
 
-  </div>
+    <mat-card-content>
+      <strong>{{ booking.createdAt | date:'dd/MM/yyyy HH:mm' }}</strong>
+    </mat-card-content>
+  </mat-card>
 
-
+</div>

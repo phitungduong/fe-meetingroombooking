@@ -54,31 +54,33 @@ export class BookingComponent implements OnInit, OnDestroy {
   // =========================
   // INIT
   // =========================
-  ngOnInit() {
-    this.loadRooms();
-    this.generateTimeSlots();
+ngOnInit() {
+  this.loadRooms();
+  this.generateTimeSlots();
+  this.minDate = this.getTodayString();
 
-    this.minDate = this.getTodayString();
+  if (this.data) {
 
-    // 👉 nhận data từ dialog
-    if (this.data) {
-      this.bookingForm.meetingRoomId = this.data.roomId || 0;
+   
+    if (this.data.roomId) {
+      this.bookingForm.meetingRoomId = this.data.roomId;
 
-      if (this.data.date) {
-        this.bookingForm.date = new Date(this.data.date);
-      }
+      // 👉 set luôn cho multi
+      this.bookingForm.meetingRoomIds = [this.data.roomId];
     }
 
-    this.loadBookedSlots();
-
-    this.bookingChangedSub = this.bookingService.bookingChanged$.subscribe(
-      () => {
-        this.loadBookedSlots();
-      },
-    );
-    this.loadBookingsInDay();
+    if (this.data.date) {
+      this.bookingForm.date = new Date(this.data.date);
+    }
   }
 
+  this.loadBookedSlots();
+  this.loadBookingsInDay();
+
+  this.bookingChangedSub = this.bookingService.bookingChanged$.subscribe(() => {
+    this.loadBookedSlots();
+  });
+}
   ngOnDestroy() {
     this.bookingChangedSub?.unsubscribe();
   }
@@ -144,33 +146,46 @@ formatDateLocal(date: Date): string {
   }
 
   loadBookedSlots() {
-  if (!this.bookingForm.meetingRoomId || !this.bookingForm.date) return;
+  if (!this.bookingForm.date) return;
 
-  const date = this.formatDateLocal(this.bookingForm.date); // 🔥 FIX
+  // 👉 lấy danh sách roomIds (support cả single + multi)
+  const roomIds =
+    this.bookingForm.meetingRoomIds?.length > 0
+      ? this.bookingForm.meetingRoomIds
+      : this.bookingForm.meetingRoomId
+      ? [this.bookingForm.meetingRoomId]
+      : [];
 
-  this.bookingService
-    .getBookingsByRoomAndDate(this.bookingForm.meetingRoomId, date)
+  if (roomIds.length === 0) return;
+
+  const date = this.formatDateLocal(this.bookingForm.date);
+
+  // 👉 gọi API mới (1 request duy nhất)
+  this.bookingService.getBookingsByRooms(roomIds, date)
     .subscribe((res: any[]) => {
 
       this.bookedSlots = res;
 
-      console.log('SLOTS:', this.bookedSlots);
+      console.log('MULTI SLOTS:', this.bookedSlots);
 
-
-      if (
-        this.bookingForm.startTime &&
-        this.isTimeBooked(this.bookingForm.startTime)
-      ) {
-        this.bookingForm.startTime = '';
-      }
-
-      if (
-        this.bookingForm.endTime &&
-        this.isTimeBooked(this.bookingForm.endTime)
-      ) {
-        this.bookingForm.endTime = '';
-      }
+      // 👉 reset time nếu bị conflict
+      this.resetInvalidTime();
     });
+}
+resetInvalidTime() {
+  if (
+    this.bookingForm.startTime &&
+    this.isTimeBooked(this.bookingForm.startTime)
+  ) {
+    this.bookingForm.startTime = '';
+  }
+
+  if (
+    this.bookingForm.endTime &&
+    this.isTimeBooked(this.bookingForm.endTime)
+  ) {
+    this.bookingForm.endTime = '';
+  }
 }
 onDateChange() {
   // reload danh sách booking khi đổi ngày
@@ -273,7 +288,7 @@ onDateChange() {
     });
   }
 
-  pageSize = 7;
+  pageSize = 10;
 pageIndex = 0;
 
 get paginatedBookings() {

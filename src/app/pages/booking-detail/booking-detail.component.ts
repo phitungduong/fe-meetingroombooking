@@ -4,10 +4,9 @@ import { BookingService } from '../../services/booking.service';
 @Component({
   selector: 'app-booking-detail',
   templateUrl: './booking-detail.component.html',
-  styleUrls: ['./booking-detail.component.css']
+  styleUrls: ['./booking-detail.component.css'],
 })
 export class BookingDetailComponent {
-
   booking: any;
 
   constructor(private bookingService: BookingService) {}
@@ -29,14 +28,7 @@ export class BookingDetailComponent {
     });
   }
 
-  // getStatusColor(status: string): 'primary' | 'accent' | 'warn' {
-  //   switch (status) {
-  //     case 'Booked': return 'primary';
-  //     case 'Completed': return 'accent';
-  //     case 'Cancelled': return 'warn';
-  //     default: return 'primary';
-  //   }
-  // }
+
 
   getDuration(start: string, end: string) {
     const s = new Date(start).getTime();

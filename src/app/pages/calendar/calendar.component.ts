@@ -22,9 +22,6 @@ import { AuthService } from 'src/app/services/auth.service';
 import { jwtDecode } from 'jwt-decode';
 import { ToastrService } from 'ngx-toastr';
 
-
-
-
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
@@ -46,7 +43,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   calendarOptions: CalendarOptions = {
     plugins: [interactionPlugin, timeGridPlugin],
     initialView: 'timeGridWeek',
-     contentHeight: window.innerHeight - 150,
+    contentHeight: window.innerHeight - 150,
     slotLabelFormat: {
       hour: '2-digit',
       minute: '2-digit',
@@ -155,7 +152,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     public calendarState: CalendarStateService,
     private roomService: RoomService,
     private authService: AuthService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
   ) {}
 
   ngOnInit(): void {
@@ -163,8 +160,8 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     this.loadRooms();
     this.getUserFromToken();
     this.calendarState.refreshCalendar$.subscribe(() => {
-    this.loadBookings(); // 🔥 auto reload
-  });
+      this.loadBookings(); // 🔥 auto reload
+    });
   }
 
   loadRooms() {
@@ -183,7 +180,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     this.dialog.open(BookingComponent, {
       width: '900px',
       data: {
-        roomId: roomId,
+        roomId: [roomId],
         date: new Date(), // 👉 mặc định hôm nay
       },
     });
@@ -196,39 +193,39 @@ export class CalendarComponent implements OnInit, AfterViewInit {
       });
     }, 300);
   }
- getUserFromToken() {
-  const token = this.authService.getAccessToken();
+  getUserFromToken() {
+    const token = this.authService.getAccessToken();
 
-  if (!token) return null;
+    if (!token) return null;
 
-  try {
-    const payload: any = jwtDecode(token);
-    this.currentUser = payload;
-    return payload;
-  } catch (error) {
-    console.error('Decode token lỗi:', error);
-    return null;
+    try {
+      const payload: any = jwtDecode(token);
+      this.currentUser = payload;
+      return payload;
+    } catch (error) {
+      console.error('Decode token lỗi:', error);
+      return null;
+    }
   }
-}
   onDateChange(date: Date) {
-  this.selectedDate = date;
+    this.selectedDate = date;
 
-  const calendarApi = this.calendarComponent.getApi();
+    const calendarApi = this.calendarComponent.getApi();
 
-  calendarApi.changeView('timeGridDay', date);
+    calendarApi.changeView('timeGridDay', date);
 
-  this.updateViewState(); // 🔥 quan trọng
-}
+    this.updateViewState(); // 🔥 quan trọng
+  }
   isLoggedIn(): boolean {
     return this.authService.isLoggedIn();
   }
   logout() {
-  this.authService.logout(); // 🔥 đã clear localStorage
+    this.authService.logout(); // 🔥 đã clear localStorage
 
-  this.currentUser = null;
+    this.currentUser = null;
 
-  this.router.navigate(['/login']);
-}
+    this.router.navigate(['/login']);
+  }
   goToLogin() {
     this.router.navigate(['/login']);
   }
@@ -254,8 +251,8 @@ export class CalendarComponent implements OnInit, AfterViewInit {
       if (this.calendarComponent) {
         const calendarApi = this.calendarComponent.getApi();
         calendarApi.removeAllEventSources(); // 🔥 quan trọng
-calendarApi.setOption('events', events);
-calendarApi.refetchEvents(); // 🔥 bắt buộc
+        calendarApi.setOption('events', events);
+        calendarApi.refetchEvents(); // 🔥 bắt buộc
       }
     });
   }
@@ -304,8 +301,8 @@ calendarApi.refetchEvents(); // 🔥 bắt buộc
       },
     });
     dialogRef.afterClosed().subscribe(() => {
-    this.isDialogOpen = false; // ✅ mở lại khi đóng
-  });
+      this.isDialogOpen = false; // ✅ mở lại khi đóng
+    });
   }
   goProfile() {
     this.router.navigate(['/profile']);

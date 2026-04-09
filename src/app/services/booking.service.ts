@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams , } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Subject, Observable } from 'rxjs';
 import { Booking } from '../models/booking';
 import { PagedResultDto } from '../models/PagedResultDto';
@@ -52,7 +52,7 @@ export class BookingService {
 
   getMyBookings(page: number = 1, pageSize: number = 5) {
     return this.http.get<PagedResultDto<Booking>>(
-      `${this.apiUrl}/my-bookings?page=${page}&pageSize=${pageSize}`
+      `${this.apiUrl}/my-bookings?page=${page}&pageSize=${pageSize}`,
     );
   }
 
@@ -60,7 +60,7 @@ export class BookingService {
     return this.http.put(
       `${this.apiUrl}/cancel/${id}`,
       {},
-      { responseType: 'text' }
+      { responseType: 'text' },
     );
   }
 
@@ -86,6 +86,15 @@ export class BookingService {
 
     return this.http.get(`${this.apiUrl}/by-date`, { params });
   }
+  getBookingsByRooms(roomIds: number[], date: any): Observable<Booking[]> {
+    const formattedDate = this.formatDate(date);
 
+    let params = new HttpParams().set('date', formattedDate);
 
+    roomIds.forEach((id) => {
+      params = params.append('roomIds', id.toString());
+    });
+
+    return this.http.get<Booking[]>(`${this.apiUrl}/rooms`, { params });
+  }
 }

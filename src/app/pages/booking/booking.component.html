@@ -3,24 +3,29 @@
 
   <div class="booking-list">
 
-   <div *ngIf="bookings?.length === 0">
-  Không có booking nào
-</div>
+  <!-- SCROLL AREA -->
+  <div class="booking-scroll">
+    <div *ngIf="bookings?.length === 0">
+      Không có booking nào
+    </div>
 
-<div *ngFor="let b of paginatedBookings" class="booking-item">
-  <div class="room"><strong>{{ b.roomName }}</strong> - {{ b.location }}</div>
-  <div class="time">{{ b.startTime | date:'HH:mm' }} - {{ b.endTime | date:'HH:mm' }}</div>
-</div>
-
-<mat-paginator
-  [length]="bookings.length"
-  [pageSize]="pageSize"
-  [pageSizeOptions]="[7, 14, 28]"
-  (page)="onPageChange($event)">
-</mat-paginator>
+    <div *ngFor="let b of paginatedBookings" class="booking-item">
+      <div class="room"><strong>{{ b.roomName }}</strong> - {{ b.location }}</div>
+      <div class="time">{{ b.startTime | date:'HH:mm' }} - {{ b.endTime | date:'HH:mm' }}</div>
+    </div>
   </div>
 
+  <!-- FOOTER (PAGINATOR) -->
+  <div class="booking-footer">
+    <mat-paginator
+      [length]="bookings.length"
+      [pageSize]="pageSize"
+      [pageSizeOptions]="[10, 20, 50]"
+      (page)="onPageChange($event)">
+    </mat-paginator>
+  </div>
 
+</div>
 
   <mat-card class="booking-card">
 
