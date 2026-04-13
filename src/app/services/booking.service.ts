@@ -77,6 +77,9 @@ export class BookingService {
   updateBookingAdmin(id: number, booking: any) {
     return this.http.put(`${this.apiUrl}/admin/${id}`, booking);
   }
+  updateBookingUser(id: number, booking: any) {
+    return this.http.put(`${this.apiUrl}/${id}`, booking);
+  }
   getBookingsByDate(date: string, roomId?: number): Observable<any> {
     let params = new HttpParams().set('date', date);
 
@@ -97,4 +100,11 @@ export class BookingService {
 
     return this.http.get<Booking[]>(`${this.apiUrl}/rooms`, { params });
   }
+  approveBooking(id: number) {
+  return this.http.put(
+    `${this.apiUrl}/approve/${id}`,
+    {},
+    { responseType: 'text' }
+  );
+}
 }

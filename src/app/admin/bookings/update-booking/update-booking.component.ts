@@ -16,7 +16,7 @@ export class UpdateBookingComponent implements OnInit {
   rooms: any[] = [];
   timeSlots: string[] = [];
   bookedSlots: any[] = [];
-  statuses: string[] = ['Booked', 'Cancelled'];
+  statuses: string[] = ['Booked', 'Cancelled', 'Completed', 'Pending'];
 
   constructor(
     private fb: FormBuilder,

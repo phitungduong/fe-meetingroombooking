@@ -1,15 +1,16 @@
+<!-- BACK -->
 <div class="back-btn" (click)="goBack()">
   <mat-icon>arrow_back</mat-icon>
 </div>
+
 <div class="page-container">
 
-
-  <!-- LEFT: PROFILE -->
+  <!-- LEFT -->
   <div class="left-panel" [class.shrink]="selectedBookingId">
 
     <div class="profile-page">
 
-      <!-- USER PROFILE -->
+      <!-- USER -->
       <h2 class="section-title">User Profile</h2>
 
       <div class="user-card">
@@ -23,12 +24,75 @@
         </div>
       </div>
 
+      <!-- FILTER -->
+      <div class="filter-container">
 
-      <!-- BOOKING -->
+        <!-- ROOM -->
+        <mat-form-field appearance="outline">
+          <mat-label>Rooms</mat-label>
+          <mat-select [(ngModel)]="selectedRooms" multiple (selectionChange)="applyFilter()">
+            <mat-select-trigger>
+              {{ selectedRooms?.length ? selectedRooms.join(', ') : 'All rooms' }}
+            </mat-select-trigger>
+
+
+
+            <mat-option *ngFor="let room of rooms" [value]="room">
+              {{ room }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <!-- FROM -->
+        <mat-form-field appearance="outline">
+          <mat-label>From Date</mat-label>
+          <input matInput [matDatepicker]="fromPicker"
+                 [(ngModel)]="fromDate"
+                 (dateChange)="applyFilter()">
+          <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
+          <mat-datepicker #fromPicker></mat-datepicker>
+        </mat-form-field>
+
+        <!-- TO -->
+        <mat-form-field appearance="outline">
+          <mat-label>To Date</mat-label>
+          <input matInput [matDatepicker]="toPicker"
+                 [(ngModel)]="toDate"
+                 (dateChange)="applyFilter()">
+          <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
+          <mat-datepicker #toPicker></mat-datepicker>
+        </mat-form-field>
+
+        <!-- STATUS -->
+        <mat-form-field appearance="outline">
+          <mat-label>Status</mat-label>
+          <mat-select [(ngModel)]="selectedStatuses" multiple (selectionChange)="applyFilter()">
+            <mat-select-trigger>
+              {{ selectedStatuses?.length ? selectedStatuses.join(', ') : 'All status' }}
+            </mat-select-trigger>
+
+           
+
+            <mat-option value="Pending">Pending</mat-option>
+            <mat-option value="Booked">Booked</mat-option>
+            <mat-option value="Cancelled">Cancelled</mat-option>
+            <mat-option value="Completed">Completed</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <!-- ACTION -->
+        <div class="filter-actions">
+          <button mat-raised-button color="warn" (click)="refresh()">Refresh</button>
+        </div>
+
+      </div>
+
+      <!-- TABLE -->
       <h2 class="section-title">Booking History</h2>
 
       <div class="table-container">
         <table>
+
           <thead>
             <tr>
               <th>Room</th>
@@ -50,45 +114,64 @@
               </td>
 
               <td>
-                <span [ngClass]="b.status">
-                  {{ getStatusText(b.status) }}
+                <span class="status" [ngClass]="getStatusClass(b)">
+                  {{ getStatusText(b) }}
                 </span>
               </td>
 
               <td class="action-buttons">
-                <button mat-icon-button style=" color: #5f6ec4;"
-                        (click)="viewDetail(b.id)">
-                  <mat-icon>visibility</mat-icon>
-                </button>
+                <div class="action-group">
 
-                <button mat-icon-button color="warn"
-                        [style.visibility]="b.status === 'Booked' ? 'visible' : 'hidden'"
-                        (click)="cancelBooking(b.id)">
-                  <mat-icon>delete</mat-icon>
-                </button>
+                  <!-- VIEW -->
+                  <button mat-icon-button (click)="viewDetail(b.id)">
+                    <mat-icon>visibility</mat-icon>
+                  </button>
+
+                  <!-- EDIT -->
+                  <button *ngIf="b.status === 'Pending'; else emptyEdit"
+                          mat-icon-button color="primary"
+                          (click)="editBooking(b)">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                  <ng-template #emptyEdit>
+                    <span class="icon-placeholder"></span>
+                  </ng-template>
+
+                  <!-- DELETE -->
+                  <button *ngIf="b.status === 'Booked' || b.status === 'Pending'; else emptyDelete"
+                          mat-icon-button color="warn"
+                          (click)="cancelBooking(b)">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                  <ng-template #emptyDelete>
+                    <span class="icon-placeholder"></span>
+                  </ng-template>
+
+                </div>
               </td>
             </tr>
           </tbody>
+
         </table>
 
-        <!-- pagination giữ nguyên -->
-         <div class="pagination">
-      <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">Prev</button>
+        <!-- PAGINATION -->
+        <div class="pagination">
+          <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">Prev</button>
 
-      <button *ngFor="let p of [].constructor(totalPages); let i = index" [class.active]="currentPage === i+1"
-        (click)="goToPage(i+1)">
-        {{ i + 1 }}
-      </button>
+          <button *ngFor="let p of [].constructor(totalPages); let i = index"
+                  [class.active]="currentPage === i+1"
+                  (click)="goToPage(i+1)">
+            {{ i + 1 }}
+          </button>
 
-      <button (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages">Next</button>
-    </div>
+          <button (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages">Next</button>
+        </div>
       </div>
 
     </div>
-
   </div>
 
-  <!-- RIGHT: BOOKING DETAIL -->
+  <!-- RIGHT -->
   <div class="right-panel" *ngIf="selectedBookingId">
     <app-booking-detail
       [bookingId]="selectedBookingId"

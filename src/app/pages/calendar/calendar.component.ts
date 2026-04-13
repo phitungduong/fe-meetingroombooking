@@ -235,7 +235,7 @@ export class CalendarComponent implements OnInit, AfterViewInit {
       const bookings = data.$values || data.data || data;
 
       const events = bookings
-        .filter((b: any) => b.status !== 'Cancelled') // bỏ booking đã hủy
+        .filter((b: any) => b.status !== 'Cancelled' && b.status !== 'Pending') // bỏ booking đã hủy và đang chờ
         .map((b: any) => ({
           id: b.id,
           title: b.meetingRoom?.name || 'No Room',

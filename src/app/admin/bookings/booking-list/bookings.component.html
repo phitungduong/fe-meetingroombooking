@@ -15,7 +15,7 @@
    <mat-select-trigger>
     {{ selectedRooms.length > 0 ? selectedRooms.join(', ') : 'All rooms' }}
   </mat-select-trigger>
-   
+
 
     <mat-option *ngFor="let room of rooms" [value]="room">
       {{ room }}
@@ -30,21 +30,46 @@
     </mat-form-field>
 
     <!-- Filter 1 ngày -->
+    <!-- 📆 Filter From Date -->
+<mat-form-field appearance="outline">
+  <mat-label>From Date</mat-label>
+  <input matInput [matDatepicker]="fromPicker"
+         [(ngModel)]="fromDate"
+         (dateChange)="applyFilter()">
+  <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
+  <mat-datepicker #fromPicker></mat-datepicker>
+</mat-form-field>
+
+<!-- 📆 Filter To Date -->
+<mat-form-field appearance="outline">
+  <mat-label>To Date</mat-label>
+  <input matInput [matDatepicker]="toPicker"
+         [(ngModel)]="toDate"
+         (dateChange)="applyFilter()">
+  <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
+  <mat-datepicker #toPicker></mat-datepicker>
+</mat-form-field>
+   <!-- filter status -->
     <mat-form-field appearance="outline">
-      <mat-label>Select Date</mat-label>
-      <input matInput [matDatepicker]="picker" [(ngModel)]="selectedDate" (dateChange)="applyFilter()">
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
+      <mat-label>Status</mat-label>
+      <mat-select [(ngModel)]="selectedStatuses" multiple (selectionChange)="applyFilter()">
+
+        <mat-option value="Pending">Pending</mat-option>
+        <mat-option value="Booked">Booked</mat-option>
+        <mat-option value="Cancelled">Cancelled</mat-option>
+        <mat-option value="Completed">Completed</mat-option>
+
+      </mat-select>
     </mat-form-field>
 
 
-    <button mat-raised-button style="background-color: #5f6ec4; color: white;" (click)="openCreateDialog()">
-      Create Booking
-    </button>
 
     <button mat-raised-button style="background-color: #ee5178; color: white;" (click)="refresh()">
   Refresh
 </button>
+ <button mat-raised-button style="background-color: #5f6ec4; color: white;" (click)="openCreateDialog()">
+      Create Booking
+    </button>
   </div>
 
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>

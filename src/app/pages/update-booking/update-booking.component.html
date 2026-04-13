@@ -1,0 +1,72 @@
+<h2 mat-dialog-title>Update Booking</h2>
+
+<form [formGroup]="form" mat-dialog-content class="form-container">
+
+  <!-- ROOM + DATE -->
+  <div class="row">
+    <mat-form-field appearance="outline">
+      <mat-label>Room</mat-label>
+      <mat-select formControlName="meetingRoomId"
+                  (selectionChange)="onChange()">
+        <mat-option *ngFor="let room of rooms" [value]="room.id">
+          {{ room.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Date</mat-label>
+      <input matInput
+             [matDatepicker]="picker"
+             formControlName="date"
+             (dateChange)="onChange()">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+  </div>
+
+  <!-- TIME -->
+  <div class="row">
+    <!-- START -->
+    <mat-form-field appearance="outline">
+      <mat-label>Start Time</mat-label>
+      <mat-select formControlName="startTime">
+
+        <mat-option *ngFor="let t of timeSlots"
+                    [value]="t"
+                    [disabled]="isTimeBooked(t) && t !== form.value.startTime"
+                    [ngClass]="{'blocked-slot': isTimeBooked(t)}">
+          {{ t }}
+        </mat-option>
+
+      </mat-select>
+    </mat-form-field>
+
+    <!-- END -->
+    <mat-form-field appearance="outline">
+      <mat-label>End Time</mat-label>
+      <mat-select formControlName="endTime">
+
+        <mat-option *ngFor="let t of timeSlots"
+                    [value]="t"
+                    [disabled]="isTimeBooked(t) && t !== form.value.endTime"
+                    [ngClass]="{'blocked-slot': isTimeBooked(t)}">
+          {{ t }}
+        </mat-option>
+
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+</form>
+
+<div mat-dialog-actions align="end">
+  <button mat-button (click)="close()">Cancel</button>
+
+  <button mat-raised-button
+          color="primary"
+          (click)="submit()"
+          [disabled]="form.invalid">
+    Update
+  </button>
+</div>

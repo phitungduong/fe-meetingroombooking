@@ -46,6 +46,7 @@ import { BookingDetailComponent } from './pages/booking-detail/booking-detail.co
 import { ConfirmDialogComponent } from './shared/confirm-dialog/confirm-dialog.component';
 import { MatPaginatorModule } from "@angular/material/paginator";
 import { HeaderComponent } from './components/header/header.component';
+import { UpdateBookingComponent } from './pages/update-booking/update-booking.component';
 
 
 @NgModule({
@@ -62,6 +63,7 @@ import { HeaderComponent } from './components/header/header.component';
     BookingDetailComponent,
     ConfirmDialogComponent,
     HeaderComponent,
+    UpdateBookingComponent,
    
 
   ],

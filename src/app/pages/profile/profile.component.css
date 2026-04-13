@@ -1,64 +1,108 @@
+/* PAGE */
+.page-container {
+  display: flex;
+  height: 100vh;
+  width: 80%;
+  margin: 0 auto;
+}
+
+/* LEFT / RIGHT */
+.left-panel {
+  width: 100%;
+  transition: 0.3s;
+  overflow: auto;
+}
+
+.left-panel.shrink {
+  width: 70%;
+  filter: brightness(0.97);
+}
+
+.right-panel {
+  width: 30%;
+  background: #fafafa;
+  border-left: 1px solid #eee;
+  overflow: auto;
+  animation: slideIn 0.3s ease;
+}
+
+/* PROFILE */
 .profile-page {
   padding: 20px;
 }
 
-/* TITLE */
 .section-title {
   margin-bottom: 15px;
-  font-weight: 900;
+  font-weight: 800;
   color: #5f6ec4;
 }
 
-/* USER CARD */
+/* USER */
 .user-card {
   display: flex;
   align-items: center;
   gap: 15px;
-
-  background: #ffffff;
+  background: #fff;
   padding: 20px;
   border-radius: 12px;
-
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-  margin-bottom: 30px;
+  margin-bottom: 25px;
 }
 
-/* AVATAR */
 .user-avatar {
   width: 55px;
   height: 55px;
   border-radius: 50%;
-
   background: #5f6ec4;
-  color: white;
-
+  color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
-
-  font-size: 20px;
   font-weight: bold;
 }
 
-/* USER INFO */
 .user-info .name {
-  margin: 0;
-  font-size: 16px;
   font-weight: 600;
 }
 
 .user-info .email {
-  margin: 2px 0 0;
-  font-size: 14px;
-  color: #666;
+  font-size: 13px;
+  color: #777;
 }
 
+/* FILTER */
+.filter-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+
+  align-items: center;
+}
+
+mat-form-field {
+  min-width: 180px;
+}
+
+.filter-actions {
+  display: flex;
+  align-items: center;
+  margin-bottom: 19px;
+}
+.mat-raised-button {
+  transition: all 0.2s ease;
+  height: 49px;
+  background-color: #ee5178;
+  color: #fff;
+}
+.mat-raised-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
 /* TABLE */
 .table-container {
-  background: #ffffff;
+  background: #fff;
   border-radius: 12px;
   overflow: hidden;
-
   box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
 
@@ -67,216 +111,78 @@ table {
   border-collapse: collapse;
 }
 
-/* HEADER */
 thead {
   background: #f5f7fb;
 }
 
-th {
+th, td {
   text-align: center;
   padding: 12px;
-  font-size: 13px;
-  color: #666;
 }
 
-/* BODY */
-td {
-  text-align: center;
-  padding: 12px;
-  font-size: 14px;
-  border-bottom: 1px solid #eee;
-}
-
-/* ROW HOVER */
 tr:hover {
   background: #f9fafc;
 }
 
-/* CUSTOM CELL */
-.room {
-  font-weight: 500;
+/* STATUS */
+.status {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
 }
 
-.time {
-  color: #5f6ec4;
-  font-weight: 500;
-}
-.Booked {
-  color: rgb(8, 0, 128);
-  font-weight: 600;
+.status-booked { background: #e3e8ff; color: #3f51b5; }
+.status-active { background: #e6f7ee; color: #28a745; }
+.status-pending { background: #fff4e5; color: #9e5f00; }
+.status-cancelled { background: #fdecea; color: #f44336; }
+.status-completed { background: #e0e0e0; color: #616161; }
+
+/* ACTION */
+.action-group {
+  display: grid;
+  grid-template-columns: repeat(3, 40px);
+  justify-content: center;
 }
 
-.Cancelled {
-  color: rgb(122, 122, 122);
-  font-weight: 600;
+.icon-placeholder {
+  width: 40px;
+  height: 40px;
 }
 
-.Completed {
-  color: rgb(0, 73, 12);
-  font-weight: 600;
-}
+/* PAGINATION */
 .pagination {
   display: flex;
-  justify-content: center; /* căn giữa */
-  align-items: center;
-  gap: 8px; /* khoảng cách giữa nút */
-  margin-top: 16px;
-  font-family: Arial, sans-serif;
+  justify-content: center;
+  gap: 8px;
+  padding: 15px;
 }
 
 .pagination button {
   padding: 6px 12px;
   border: 1px solid #ccc;
-  background-color: #f8f8f8;
-  color: #333;
-  cursor: pointer;
+  background: #f8f8f8;
   border-radius: 4px;
-  transition: all 0.2s ease-in-out;
 }
 
-.pagination button:hover:not(:disabled) {
-  background-color: #007bff;
-  color: white;
-  border-color: #007bff;
+.pagination button.active {
+  background: #5f6ec4;
+  color: #fff;
 }
 
-.pagination button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.pagination span {
-  font-weight: bold;
-  padding: 0 8px;
-}
-
-
-.filter-container {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 15px;
-}
-
-.filter-container input,
-.filter-container select {
-  padding: 6px 10px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-}
-
-.action-buttons {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-}
-
-
-.btn-cancel {
-  transition: all 0.2s ease;
-
-}
-
-.btn-cancel:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-.btn-detail {
-  transition: all 0.2s ease;
-
-}
-.btn-detail:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-
-
-
-
-.page-container {
-  display: flex;
-  height: 100vh;
-  overflow: hidden;
-  width: 80%;
-  margin: 0 10% 0 10%;
-}
-
-/* LEFT */
-.left-panel {
-  width: 100%;
-  transition: all 0.3s ease;
-  overflow: auto;
-}
-
-.left-panel.shrink {
-  width: 70%;
-}
-
-/* RIGHT */
-.right-panel {
-  width: 30%;
-  background: #fafafa;
-  border-left: 1px solid #eee;
-  overflow: auto;
-
-  animation: slideIn 0.3s ease;
-}
-
-/* animation */
-@keyframes slideIn {
-  from {
-    transform: translateX(100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-
-/* optional đẹp hơn */
-.left-panel.shrink {
-  filter: brightness(0.97);
-}
-.mat-icon-button {
-  transition: all 0.2s ease;
-}
-.mat-icon-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-/* BACK BUTTON */
+/* BACK */
 .back-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-
+  margin: 20px 0px 0px 20px;
   cursor: pointer;
-
   color: #5f6ec4;
-  font-weight: 500;
-  font-size: 45px;
-
-  margin-bottom: 10px;
-
-  transition: 0.2s;
-
-  border-radius: 4px;
-  padding: 4px 8px;
-  margin-left: 30px;
-  margin-top: 20px;
 }
 
-/* icon */
-.back-btn mat-icon {
-  font-size: 25px;
-
-}
-
-/* hover */
 .back-btn:hover {
-  color: #3f51b5;
   transform: translateX(-2px);
+}
+
+
+/* ANIMATION */
+@keyframes slideIn {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
 }

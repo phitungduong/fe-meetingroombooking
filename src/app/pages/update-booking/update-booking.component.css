@@ -1,0 +1,92 @@
+/* ===== CONTAINER ===== */
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding-top: 8px;
+}
+
+/* ===== ROW LAYOUT ===== */
+.row {
+  display: flex;
+  gap: 16px;
+}
+
+/* 2 cột */
+.row mat-form-field {
+  flex: 1;
+}
+
+/* ===== INPUT STYLE ===== */
+mat-form-field {
+  width: 100%;
+}
+
+/* ===== DIALOG TITLE ===== */
+::ng-deep .mat-dialog-title {
+  font-weight: 600;
+  font-size: 20px;
+  color: #3f51b5;
+}
+
+/* ===== BUTTON AREA ===== */
+[mat-dialog-actions] {
+  margin-top: 10px;
+}
+
+/* ===== PRIMARY BUTTON ===== */
+.mat-raised-button {
+  transition: all 0.2s ease;
+  background-color: #5f6ec4 !important;
+  color: #fff !important;
+  border-radius: 6px;
+  padding: 6px 18px;
+}
+
+.mat-raised-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  background-color: #4d5cb1 !important;
+}
+
+/* ===== CANCEL BUTTON ===== */
+.mat-button {
+  transition: all 0.2s ease;
+}
+
+.mat-button:hover {
+  transform: translateY(-2px);
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* ===== SELECT DROPDOWN ===== */
+.mat-select-panel {
+  max-height: 250px !important;
+}
+
+/* ===== DISABLED SLOT ===== */
+.mat-option[disabled] {
+  color: #ccc !important;
+}
+
+/* ===== SCROLLBAR (optional đẹp hơn) ===== */
+::-webkit-scrollbar {
+  height: 6px;
+  width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #bbb;
+  border-radius: 10px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .row {
+    flex-direction: column;
+  }
+}
+.block-slot {
+  color: #940606;
+  font-style: italic;
+}

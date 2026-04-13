@@ -131,6 +131,9 @@ button[mat-raised-button] {
 .status-chip.cancelled {
   color: #c62828;
 }
+.status-chip.pending {
+  color: #b67000;
+}
 .mat-icon-button {
 transition: all 0.2s ease;
 color: #888;

@@ -26,6 +26,7 @@ export class BookingsComponent implements OnInit {
   selectedDate: Date | null = null;
   fromDate: Date | null = null;
   toDate: Date | null = null;
+  selectedStatuses: string[] = ['ALL'];
   displayedColumns: string[] = [
     'id',
      'meetingRoomId',
@@ -154,45 +155,65 @@ normalize(text: string): string {
     .replace(/[\u0300-\u036f]/g, ''); // xoá dấu
 }
  applyFilter() {
-  let filtered = this.originalData;
+  let filtered = [...this.originalData]; // clone cho an toàn
 
   // 🏢 Filter room
   if (
     this.selectedRooms &&
     this.selectedRooms.length > 0 &&
-    !this.selectedRooms.includes('ALL') // 👈 sửa chỗ này
+    !this.selectedRooms.includes('ALL')
   ) {
     filtered = filtered.filter(b =>
-      this.selectedRooms.includes(b.meetingRoom.name)
+      this.selectedRooms.includes(b.meetingRoom?.name)
     );
   }
 
   // 👤 Filter user
   if (this.userFilter && this.userFilter.trim()) {
-  const keyword = this.normalize(this.userFilter.trim());
+    const keyword = this.normalize(this.userFilter.trim());
 
-  filtered = filtered.filter(b => {
-    const fullName = this.normalize(b.user?.fullName || '');
-    const email = this.normalize(b.user?.email || '');
+    filtered = filtered.filter(b => {
+      const fullName = this.normalize(b.user?.fullName || '');
+      const email = this.normalize(b.user?.email || '');
 
-    return fullName.includes(keyword) || email.includes(keyword);
-  });
-}
+      return fullName.includes(keyword) || email.includes(keyword);
+    });
+  }
 
-  // 📅 Filter 1 ngày
-  if (this.selectedDate) {
-    const selected = new Date(this.selectedDate).toDateString();
-
+  // 📌 Filter status (multi)
+  if (
+    this.selectedStatuses &&
+    this.selectedStatuses.length > 0 &&
+    !this.selectedStatuses.includes('ALL')
+  ) {
     filtered = filtered.filter(b =>
-      new Date(b.startTime).toDateString() === selected
+      this.selectedStatuses.includes(b.status)
     );
   }
 
-  // 📆 Filter khoảng ngày
-  if (this.fromDate && this.toDate) {
+  // 📅 + 📆 Filter ngày (fix logic)
+  if (this.selectedDate) {
+    // 👉 ưu tiên filter 1 ngày
+    const selected = new Date(this.selectedDate);
+    selected.setHours(0, 0, 0, 0);
+
     filtered = filtered.filter(b => {
       const date = new Date(b.startTime);
-      return date >= this.fromDate! && date <= this.toDate!;
+      date.setHours(0, 0, 0, 0);
+      return date.getTime() === selected.getTime();
+    });
+
+  } else if (this.fromDate && this.toDate) {
+    // 👉 filter khoảng ngày (fix giờ)
+    const from = new Date(this.fromDate);
+    from.setHours(0, 0, 0, 0);
+
+    const to = new Date(this.toDate);
+    to.setHours(23, 59, 59, 999);
+
+    filtered = filtered.filter(b => {
+      const time = new Date(b.startTime).getTime();
+      return time >= from.getTime() && time <= to.getTime();
     });
   }
 
@@ -226,6 +247,7 @@ refresh() {
   this.selectedDate = null;
   this.fromDate = null;
   this.toDate = null;
+  this.selectedStatuses = ['ALL'];
 
   // reload data từ server
   this.getBookings();

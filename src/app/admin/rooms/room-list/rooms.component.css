@@ -74,6 +74,11 @@ mat-paginator {
 /* Create button spacing */
 button[mat-raised-button] {
   margin-bottom: 10px;
+  transition: all 0.2s ease;
+}
+button[mat-raised-button]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 .mat-mdc-header-cell {
   display: flex;
@@ -94,7 +99,7 @@ th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:
 }
 
 .inactive {
- 
+
   font-weight: 600;
 }
 
