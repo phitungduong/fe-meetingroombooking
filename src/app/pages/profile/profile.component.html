@@ -71,7 +71,7 @@
               {{ selectedStatuses?.length ? selectedStatuses.join(', ') : 'All status' }}
             </mat-select-trigger>
 
-           
+
 
             <mat-option value="Pending">Pending</mat-option>
             <mat-option value="Booked">Booked</mat-option>
@@ -104,7 +104,7 @@
           </thead>
 
           <tbody>
-            <tr *ngFor="let b of bookings">
+            <tr *ngFor="let b of paginatedBookings">
               <td>{{ b.meetingRoom?.name }}</td>
               <td>{{ b.startTime | date:'dd/MM/yyyy' }}</td>
 
@@ -155,17 +155,12 @@
         </table>
 
         <!-- PAGINATION -->
-        <div class="pagination">
-          <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">Prev</button>
-
-          <button *ngFor="let p of [].constructor(totalPages); let i = index"
-                  [class.active]="currentPage === i+1"
-                  (click)="goToPage(i+1)">
-            {{ i + 1 }}
-          </button>
-
-          <button (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages">Next</button>
-        </div>
+      <mat-paginator
+  [length]="bookings.length"
+  [pageSize]="5"
+  [pageSizeOptions]="[5, 10, 20]"
+  (page)="onPageChange()">
+</mat-paginator>
       </div>
 
     </div>

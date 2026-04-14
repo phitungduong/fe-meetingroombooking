@@ -3,28 +3,28 @@
   <!-- TOP CARDS -->
   <div class="cards">
     <div class="card">
-      <h3>Tổng phòng</h3>
+      <h3>Total Rooms</h3>
       <p>{{ stats.totalRoom }}</p>
     </div>
 
     <div class="card">
-      <h3>Booking hôm nay</h3>
+      <h3>Today's Bookings</h3>
       <p>{{ stats.todayBookings }}</p>
     </div>
 
     <div class="card">
-      <h3>Sắp tới</h3>
+      <h3>Upcoming</h3>
       <p>{{ stats.upcoming }}</p>
 
     </div>
 
     <div class="card">
-      <h3>Đang sử dụng</h3>
+      <h3>Ongoing</h3>
       <p>{{ stats.ongoing }}</p>
     </div>
 
     <div class="card">
-      <h3>Đã xong</h3>
+      <h3>Completed</h3>
       <p>{{ stats.recent }}</p>
     </div>
 
@@ -37,7 +37,7 @@
 
       <!-- Ongoing -->
       <mat-tab label="Ongoing">
-        <div class="card" *ngIf="ongoing && ongoing.length > 0">
+        <div class="card" *ngIf="ongoing && ongoing.length > 0; else noOngoing">
           <h2>Ongoing Meetings</h2>
 
           <table>
@@ -71,11 +71,16 @@
             (page)="onPageChange($event, 'ongoing')">
           </mat-paginator>
         </div>
+        <ng-template #noOngoing>
+    <div class="card empty">
+      No ongoing bookings
+    </div>
+  </ng-template>
       </mat-tab>
 
       <!-- Upcoming -->
       <mat-tab label="Upcoming">
-        <div class="card" *ngIf="upcoming && upcoming.length > 0">
+        <div class="card" *ngIf="upcoming && upcoming.length > 0; else noUpcoming">
           <h2>Upcoming Meetings</h2>
 
           <table>
@@ -109,11 +114,16 @@
             (page)="onPageChange($event, 'upcoming')">
           </mat-paginator>
         </div>
+        <ng-template #noUpcoming>
+    <div class="card empty">
+      No upcoming bookings
+    </div>
+  </ng-template>
       </mat-tab>
 
       <!-- Recent -->
       <mat-tab label="Recent">
-        <div class="card" *ngIf="recent && recent.length > 0">
+        <div class="card" *ngIf="recent && recent.length > 0; else noRecent">
           <h2>Recent Meetings</h2>
 
           <table>
@@ -149,6 +159,11 @@
             (page)="onPageChange($event, 'recent')">
           </mat-paginator>
         </div>
+        <ng-template #noRecent>
+    <div class="card empty">
+      No recent bookings
+    </div>
+  </ng-template>
       </mat-tab>
 
     </mat-tab-group>

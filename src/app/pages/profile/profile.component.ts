@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild, AfterViewInit } from '@angular/core';
 import { BookingService } from '../../services/booking.service';
 import { UserService } from '../../services/user.service';
 import { ToastrService } from 'ngx-toastr';
@@ -10,7 +10,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../../shared/confirm-dialog/confirm-dialog.component';
 import { AuthService } from 'src/app/services/auth.service';
 import { UpdateBookingComponent } from '../update-booking/update-booking.component';
-
+import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginatorModule } from '@angular/material/paginator';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -19,9 +20,12 @@ import { UpdateBookingComponent } from '../update-booking/update-booking.compone
 export class ProfileComponent implements OnInit {
   user: any;
   bookings: any[] = [];
-  currentPage = 1;
-  pageSize = 5;
-  totalPages = 0;
+  originalBookings: any[] = [];
+
+paginatedBookings: any[] = [];
+
+@ViewChild(MatPaginator) paginator!: MatPaginator;
+pageSize = 5;
   now = new Date();
   CANCEL_LIMIT_HOURS = 3;
   // 🔥 FILTER
@@ -30,8 +34,6 @@ selectedStatuses: string[] = [];
 fromDate: Date | null = null;
 toDate: Date | null = null;
 
-// 🔥 lưu dữ liệu gốc
-originalBookings: any[] = [];
 
 
   constructor(
@@ -44,6 +46,8 @@ originalBookings: any[] = [];
     private matButtonModule: MatButtonModule,
     private dialog: MatDialog,
     public authService: AuthService,
+    private matPaginatorModule: MatPaginatorModule
+
   ) {}
 
   ngOnInit(): void {
@@ -56,13 +60,11 @@ originalBookings: any[] = [];
     }, 30000);
   }
 
-loadBookings(page: number = 1) {
-  this.bookingService.getMyBookings(page, this.pageSize).subscribe(res => {
-    this.bookings = res.items;
-    this.originalBookings = res.items; // 🔥 giữ bản gốc
-
-    this.currentPage = res.currentPage;
-    this.totalPages = res.totalPages;
+loadBookings() {
+  this.bookingService.getMyBookings().subscribe(res => {
+    console.log('API response:', res); // 👈 xem cái này
+   this.originalBookings = res;
+    this.applyFilter();
   });
 }
   isFuture(date: string): boolean {
@@ -73,7 +75,7 @@ loadBookings(page: number = 1) {
       next: (res) => {
         alert('Booking success');
         // 🔥 Chỉ load lại từ API
-        this.loadBookings(this.currentPage);
+        this.loadBookings();
       },
       error: (err) => {
         console.log(err);
@@ -81,10 +83,19 @@ loadBookings(page: number = 1) {
       },
     });
   }
-  goToPage(page: number) {
-    if (page < 1 || page > this.totalPages) return;
-    this.loadBookings(page);
-  }
+  updatePagedData() {
+  if (!this.paginator) return;
+
+  const start = this.paginator.pageIndex * this.paginator.pageSize;
+  const end = start + this.paginator.pageSize;
+
+  this.paginatedBookings = this.bookings.slice(start, end);
+}
+
+onPageChange() {
+  this.updatePagedData();
+}
+
   canCancel(booking: any): boolean {
     // ✅ Pending → luôn cho hủy
     if (booking.status === 'Pending') {
@@ -101,7 +112,7 @@ loadBookings(page: number = 1) {
       return diffHours >= this.CANCEL_LIMIT_HOURS;
     }
 
-    // ❌ trạng thái khác
+    // ❌ other statuses
     return false;
   }
 
@@ -110,19 +121,19 @@ loadBookings(page: number = 1) {
       let message = '';
 
       if (booking.status === 'Booked') {
-        message = `Chỉ được hủy trước ${this.CANCEL_LIMIT_HOURS} tiếng`;
+        message = `Can only cancel ${this.CANCEL_LIMIT_HOURS} hours before`;
       } else {
-        message = 'Không thể hủy booking này';
+        message = 'Cannot cancel this booking';
       }
 
-      this.toastr.warning(message, 'Không thể hủy');
+      this.toastr.warning(message, 'Cannot Cancel');
       return;
     }
 
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '350px',
       data: {
-        message: 'Bạn có chắc muốn hủy booking này không?',
+        message: 'Are you sure you want to cancel this booking?',
       },
     });
 
@@ -130,11 +141,11 @@ loadBookings(page: number = 1) {
       if (result) {
         this.bookingService.cancelBooking(booking.id).subscribe({
           next: () => {
-            this.toastr.success('Hủy thành công');
-            this.loadBookings(this.currentPage);
+            this.toastr.success('Booking cancelled successfully');
+            this.loadBookings();
           },
           error: (err) => {
-            this.toastr.error(err.error || 'Hủy thất bại');
+            this.toastr.error(err.error || 'Booking cancellation failed');
           },
         });
       }
@@ -160,20 +171,20 @@ loadBookings(page: number = 1) {
       const end = new Date(booking.endTime).getTime();
 
       if (now >= start && now <= end) {
-        return 'Đang diễn ra';
+        return 'In Progress';
       }
 
-      return 'Đã đặt';
+      return 'Booked';
     }
 
     // ✅ các status khác
     switch (status) {
       case 'Cancelled':
-        return 'Đã hủy';
+        return 'Cancelled';
       case 'Completed':
-        return 'Đã xong';
+        return 'Completed';
       case 'Pending':
-        return 'Đang chờ';
+        return 'Pending';
       default:
         return status;
     }
@@ -220,40 +231,55 @@ loadBookings(page: number = 1) {
         }
       });
   }
+  formatDate(date: any): string {
+  const d = new Date(date);
+  return d.toISOString().split('T')[0]; // yyyy-MM-dd
+}
 applyFilter() {
   let filtered = [...this.originalBookings];
 
-  // 🔎 ROOM
-  if (this.selectedRooms.length > 0) {
+  if (this.selectedRooms?.length) {
     filtered = filtered.filter(b =>
       this.selectedRooms.includes(b.meetingRoom?.name)
     );
   }
 
-  // 🔎 STATUS
-  if (this.selectedStatuses.length > 0) {
+  if (this.selectedStatuses?.length) {
     filtered = filtered.filter(b =>
       this.selectedStatuses.includes(b.status)
     );
   }
 
-  // 🔎 FROM DATE
+  // ✅ FROM DATE
   if (this.fromDate) {
-    const from = new Date(this.fromDate).setHours(0, 0, 0, 0);
+    const from = new Date(this.fromDate);
+    from.setHours(0, 0, 0, 0); // đầu ngày
+
     filtered = filtered.filter(b =>
-      new Date(b.startTime).getTime() >= from
+      new Date(b.startTime) >= from
     );
   }
 
-  // 🔎 TO DATE
+  // ✅ TO DATE
   if (this.toDate) {
-    const to = new Date(this.toDate).setHours(23, 59, 59, 999);
+    const to = new Date(this.toDate);
+    to.setHours(23, 59, 59, 999); // cuối ngày
+
     filtered = filtered.filter(b =>
-      new Date(b.startTime).getTime() <= to
+      new Date(b.startTime) <= to
     );
   }
 
   this.bookings = filtered;
+
+  if (this.paginator) {
+    this.paginator.firstPage();
+  }
+
+  this.updatePagedData();
+}
+ngAfterViewInit() {
+  this.updatePagedData();
 }
 get rooms(): string[] {
   return [...new Set(this.originalBookings.map(b => b.meetingRoom?.name).filter(Boolean))];
@@ -264,6 +290,6 @@ refresh() {
   this.fromDate = null;
   this.toDate = null;
 
-  this.loadBookings(this.currentPage);
+  this.loadBookings();
 }
 }

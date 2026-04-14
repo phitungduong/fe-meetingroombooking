@@ -102,3 +102,9 @@ h1 {
   font-weight: 900;
   margin-bottom: 20px;
 }
+.empty {
+  text-align: center;
+  padding: 40px;
+  color: #888;
+  font-style: italic;
+}

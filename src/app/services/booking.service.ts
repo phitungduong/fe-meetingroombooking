@@ -50,11 +50,9 @@ export class BookingService {
     return this.http.get<Booking[]>(this.apiUrl);
   }
 
-  getMyBookings(page: number = 1, pageSize: number = 5) {
-    return this.http.get<PagedResultDto<Booking>>(
-      `${this.apiUrl}/my-bookings?page=${page}&pageSize=${pageSize}`,
-    );
-  }
+  getMyBookings() {
+  return this.http.get<any[]>(`${this.apiUrl}/my-bookings`);
+}
 
   cancelBooking(id: number) {
     return this.http.put(

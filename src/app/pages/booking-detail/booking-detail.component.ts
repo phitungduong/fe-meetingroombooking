@@ -24,6 +24,7 @@ export class BookingDetailComponent {
 
   loadBooking(id: number) {
     this.bookingService.getBookingById(id).subscribe((res: any) => {
+       console.log(res);
       this.booking = res.data;
     });
   }
