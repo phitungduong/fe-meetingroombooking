@@ -30,15 +30,15 @@ export class HeaderComponent implements OnInit {
 logout() {
   const dialogRef = this.matDialog.open(ConfirmDialogComponent, {
     data: {
-      title: 'Xác nhận đăng xuất',
-      message: 'Bạn có chắc muốn đăng xuất không?',
+      title: 'confirm logout',
+      message: 'Are you sure you want to logout?',
     },
     width: '350px',
   });
 
   dialogRef.afterClosed().subscribe(result => {
     if (result) {
-     
+
       this.authService.logout();
 
       localStorage.removeItem('token');

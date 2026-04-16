@@ -132,10 +132,12 @@ tr:hover {
 }
 
 .status-booked { background: #e3e8ff; color: #3f51b5; }
-.status-active { background: #e6f7ee; color: #28a745; }
+.status-ongoing { background: #e6f7ee; color: #28a745; }
 .status-pending { background: #fff4e5; color: #9e5f00; }
 .status-cancelled { background: #fdecea; color: #f44336; }
 .status-completed { background: #e0e0e0; color: #616161; }
+.status-expired { background: #ffebee; color: #d32f2f; }
+.status-rejected { background: #fbe9e7; color: #610064; }
 
 /* ACTION */
 .action-group {

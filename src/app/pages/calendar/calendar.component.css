@@ -28,7 +28,7 @@
   font-weight: 900!important;
 }
 .fc-event {
-  background-color: #8a9cff !important;
+  /* background-color: #8a9cff !important; */
   border: none !important;
   color: white !important;
   border-radius: 8px !important;
@@ -443,3 +443,4 @@ font-weight: 500;
 .btn-book:active .mdc-fab__surface {
   transform: scale(0.95);
 }
+

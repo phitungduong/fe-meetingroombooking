@@ -49,6 +49,21 @@
   background: #f5f5f5;
   border-left: 4px solid #1976d2;
 }
+.booking-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 6px;
+}
+
+.time {
+  font-size: 14px;
+  color: #555;
+}
+
+.status {
+  font-size: 12px;
+}
 
 /* RIGHT */
 .booking-card {
@@ -95,3 +110,32 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
+.status-booked {
+
+  color: #0020c2;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-weight: 600;
+}
+
+.status-completed {
+
+  color: #3d3d3d;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-weight: 600;
+}
+.status-ongoing {
+
+  color: #00570e;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-weight: 700;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.6; }
+  100% { opacity: 1; }
+}

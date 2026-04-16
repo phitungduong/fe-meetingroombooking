@@ -134,6 +134,12 @@ button[mat-raised-button] {
 .status-chip.pending {
   color: #b67000;
 }
+.status-chip.expired {
+  color: #000000;
+}
+.status-chip.rejected {
+  color: #610064;
+}
 .mat-icon-button {
 transition: all 0.2s ease;
 color: #888;

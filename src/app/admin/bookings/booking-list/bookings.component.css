@@ -1,5 +1,9 @@
 .booking-container {
-
+}
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 table {
@@ -10,25 +14,36 @@ table {
 
 /* Status màu */
 .completed {
-  color: green;
+  color: rgb(102, 102, 102);
   font-weight: bold;
 }
 .pending {
   color: #b67000;
   font-weight: bold;
 }
-
-
-
+.ongoing {
+  color: #007413;
+  font-weight: bold;
+}
+.expired {
+  color: #000000;
+  font-weight: bold;
+}
 
 .cancelled {
-  color: red;
+  color: rgb(179, 0, 0);
   font-weight: bold;
 }
 .booked {
-  color: rgb(8, 0, 128);
+  color: rgb(13, 0, 190);
   font-weight: 600;
 }
+
+.rejected {
+  color: #80008b;
+  font-weight: bold;
+}
+
 mat-paginator {
   margin-top: 10px;
 }
@@ -37,9 +52,9 @@ h1 {
   margin-bottom: 20px;
   font-weight: 900;
 }
-td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type {
-
-    padding: 20px;
+td.mat-cell:first-of-type,
+td.mat-footer-cell:first-of-type {
+  padding: 20px;
 }
 .filter-container {
   display: flex;
@@ -67,7 +82,6 @@ mat-form-field {
   height: 50px;
   border-radius: 8px;
   margin-top: 4px;
-
 }
 .mat-raised-button:hover {
   transform: translateY(-2px);
@@ -81,5 +95,14 @@ mat-form-field {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 .mat-form-field-wrapper {
-    padding-bottom: 0;
+  padding-bottom: 0;
+}
+.mat-form-field {
+  width: 180px;
+}
+.mat-create-button {
+  width: 150px;
+  height: 50px;
+  border-radius: 8px;
+  margin-top: 4px;
 }

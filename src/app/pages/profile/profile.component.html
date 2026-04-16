@@ -46,9 +46,7 @@
         <!-- FROM -->
         <mat-form-field appearance="outline">
           <mat-label>From Date</mat-label>
-          <input matInput [matDatepicker]="fromPicker"
-                 [(ngModel)]="fromDate"
-                 (dateChange)="applyFilter()">
+          <input matInput [matDatepicker]="fromPicker" [(ngModel)]="fromDate" (dateChange)="applyFilter()">
           <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
           <mat-datepicker #fromPicker></mat-datepicker>
         </mat-form-field>
@@ -56,9 +54,7 @@
         <!-- TO -->
         <mat-form-field appearance="outline">
           <mat-label>To Date</mat-label>
-          <input matInput [matDatepicker]="toPicker"
-                 [(ngModel)]="toDate"
-                 (dateChange)="applyFilter()">
+          <input matInput [matDatepicker]="toPicker" [(ngModel)]="toDate" (dateChange)="applyFilter()">
           <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
           <mat-datepicker #toPicker></mat-datepicker>
         </mat-form-field>
@@ -72,11 +68,13 @@
             </mat-select-trigger>
 
 
-
+            <mat-option value="Ongoing">Ongoing</mat-option>
             <mat-option value="Pending">Pending</mat-option>
             <mat-option value="Booked">Booked</mat-option>
-            <mat-option value="Cancelled">Cancelled</mat-option>
             <mat-option value="Completed">Completed</mat-option>
+            <mat-option value="Cancelled">Cancelled</mat-option>
+            <mat-option value="Rejected">Rejected</mat-option>
+            <mat-option value="Expired">Expired</mat-option>
           </mat-select>
         </mat-form-field>
 
@@ -128,9 +126,8 @@
                   </button>
 
                   <!-- EDIT -->
-                  <button *ngIf="b.status === 'Pending'; else emptyEdit"
-                          mat-icon-button color="primary"
-                          (click)="editBooking(b)">
+                  <button *ngIf="b.status === 'Pending'; else emptyEdit" mat-icon-button color="primary"
+                    (click)="editBooking(b)">
                     <mat-icon>edit</mat-icon>
                   </button>
                   <ng-template #emptyEdit>
@@ -138,9 +135,8 @@
                   </ng-template>
 
                   <!-- DELETE -->
-                  <button *ngIf="b.status === 'Booked' || b.status === 'Pending'; else emptyDelete"
-                          mat-icon-button color="warn"
-                          (click)="cancelBooking(b)">
+                  <button *ngIf="b.status === 'Booked' || b.status === 'Pending'; else emptyDelete" mat-icon-button
+                    color="warn" (click)="cancelBooking(b)">
                     <mat-icon>delete</mat-icon>
                   </button>
                   <ng-template #emptyDelete>
@@ -155,12 +151,9 @@
         </table>
 
         <!-- PAGINATION -->
-      <mat-paginator
-  [length]="bookings.length"
-  [pageSize]="5"
-  [pageSizeOptions]="[5, 10, 20]"
-  (page)="onPageChange()">
-</mat-paginator>
+        <mat-paginator [length]="bookings.length" [pageSize]="5" [pageSizeOptions]="[5, 10, 20]"
+          (page)="onPageChange()">
+        </mat-paginator>
       </div>
 
     </div>
@@ -168,9 +161,7 @@
 
   <!-- RIGHT -->
   <div class="right-panel" *ngIf="selectedBookingId">
-    <app-booking-detail
-      [bookingId]="selectedBookingId"
-      (close)="closeDetail()">
+    <app-booking-detail [bookingId]="selectedBookingId" (close)="closeDetail()">
     </app-booking-detail>
   </div>
 

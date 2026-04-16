@@ -29,11 +29,11 @@ export class ErrorInterceptor implements HttpInterceptor {
       }
 
       if (error.status === 401) {
-        message = "Bạn cần đăng nhập";
+        message = "Please login again";
       }
 
       if (error.status === 500) {
-        message = "Lỗi hệ thống";
+        message = "System error";
       }
 
       this.toastr.error(message);

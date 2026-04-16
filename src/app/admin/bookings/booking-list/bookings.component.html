@@ -1,78 +1,112 @@
 <div class="booking-container">
-  <h1>Booking List</h1>
-
-  <div class="filter-container">
-
-    <!-- Filter Room -->
-    <mat-form-field appearance="outline">
-  <mat-label>Rooms</mat-label>
-
-  <mat-select
-    [(ngModel)]="selectedRooms"
-    multiple
-    (selectionChange)="applyFilter()"
-  >
-   <mat-select-trigger>
-    {{ selectedRooms.length > 0 ? selectedRooms.join(', ') : 'All rooms' }}
-  </mat-select-trigger>
+  <div class="header-row">
 
 
-    <mat-option *ngFor="let room of rooms" [value]="room">
-      {{ room }}
-    </mat-option>
-  </mat-select>
-</mat-form-field>
+  <button mat-raised-button
+          style="background-color: #5f6ec4; color: white;margin: 0px 1400px 20px 0px ;"
+          (click)="openCreateDialog()">
+    Create Booking
+  </button>
+</div>
 
-    <!-- Filter User -->
-    <mat-form-field appearance="outline">
-      <mat-label>Search User</mat-label>
-      <input matInput placeholder="Name or Email" [(ngModel)]="userFilter" (input)="applyFilter()">
-    </mat-form-field>
+ <div class="filter-container">
 
-    <!-- Filter 1 ngày -->
-    <!-- 📆 Filter From Date -->
-<mat-form-field appearance="outline">
-  <mat-label>From Date</mat-label>
-  <input matInput [matDatepicker]="fromPicker"
-         [(ngModel)]="fromDate"
-         (dateChange)="applyFilter()">
-  <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
-  <mat-datepicker #fromPicker></mat-datepicker>
-</mat-form-field>
+  <!-- Filter Room -->
+  <mat-form-field appearance="outline">
+    <mat-label>Rooms</mat-label>
+    <mat-select [(ngModel)]="selectedRooms" multiple (selectionChange)="applyFilter()">
+      <mat-select-trigger>
+        {{ selectedRooms.length > 0 ? selectedRooms.join(', ') : 'All rooms' }}
+      </mat-select-trigger>
 
-<!-- 📆 Filter To Date -->
-<mat-form-field appearance="outline">
-  <mat-label>To Date</mat-label>
-  <input matInput [matDatepicker]="toPicker"
-         [(ngModel)]="toDate"
-         (dateChange)="applyFilter()">
-  <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
-  <mat-datepicker #toPicker></mat-datepicker>
-</mat-form-field>
-   <!-- filter status -->
-    <mat-form-field appearance="outline">
-      <mat-label>Status</mat-label>
-      <mat-select [(ngModel)]="selectedStatuses" multiple (selectionChange)="applyFilter()">
+      <mat-option *ngFor="let room of rooms" [value]="room">
+        {{ room }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
 
-        <mat-option value="Pending">Pending</mat-option>
-        <mat-option value="Booked">Booked</mat-option>
-        <mat-option value="Cancelled">Cancelled</mat-option>
-        <mat-option value="Completed">Completed</mat-option>
+  <!-- Filter User -->
+  <mat-form-field appearance="outline">
+    <mat-label>Search User</mat-label>
+    <input matInput placeholder="Name or Email"
+           [(ngModel)]="userFilter"
+           (input)="applyFilter()">
+  </mat-form-field>
 
-      </mat-select>
-    </mat-form-field>
+  <!-- From Date -->
+  <mat-form-field appearance="outline">
+    <mat-label>From Date</mat-label>
+    <input matInput [matDatepicker]="fromPicker"
+           [(ngModel)]="fromDate"
+           (dateChange)="applyFilter()">
+    <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
+    <mat-datepicker #fromPicker></mat-datepicker>
+  </mat-form-field>
 
+  <!-- To Date -->
+  <mat-form-field appearance="outline">
+    <mat-label>To Date</mat-label>
+    <input matInput [matDatepicker]="toPicker"
+           [(ngModel)]="toDate"
+           (dateChange)="applyFilter()">
+    <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
+    <mat-datepicker #toPicker></mat-datepicker>
+  </mat-form-field>
 
+  <!-- Status -->
+  <mat-form-field appearance="outline">
+    <mat-label>Status</mat-label>
+    <mat-select [(ngModel)]="selectedStatuses" multiple (selectionChange)="applyFilter()">
+      <mat-option value="Pending">Pending</mat-option>
+      <mat-option value="Booked">Booked</mat-option>
+      <mat-option value="Cancelled">Cancelled</mat-option>
+      <mat-option value="Completed">Completed</mat-option>
+      <mat-option value="Ongoing">Ongoing</mat-option>
+      <mat-option value="Rejected">Rejected</mat-option>
+      <mat-option value="Expired">Expired</mat-option>
+    </mat-select>
+  </mat-form-field>
 
-    <button mat-raised-button style="background-color: #ee5178; color: white;" (click)="refresh()">
-  Refresh
-</button>
- <button mat-raised-button style="background-color: #5f6ec4; color: white;" (click)="openCreateDialog()">
-      Create Booking
-    </button>
-  </div>
+  <!-- Refresh -->
+  <button mat-raised-button
+          style="background-color: #ee5178; color: white;"
+          (click)="refresh()">
+    Refresh
+  </button>
+
+  <!-- 🔥 Confirm Selected (chỉ hiện khi có chọn Pending) -->
+  <button *ngIf="getSelectedBookingIds().length > 0"
+          mat-raised-button
+          style="background-color: #4caf50; color: white;"
+          (click)="confirmSelectedBookings()">
+    Confirm ({{ getSelectedBookingIds().length }})
+  </button>
+  <!-- <button *ngIf="getSelectedBookingIds().length > 0"
+        mat-raised-button
+        style="background-color: #f44336; color: white;"
+        (click)="deleteSelectedBookings()">
+  Delete Selected ({{ getSelectedBookingIds().length }})
+</button> -->
+</div>
 
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+    <!-- SELECT -->
+<ng-container matColumnDef="select">
+  <th mat-header-cell *matHeaderCellDef>
+    <mat-checkbox
+      (change)="toggleAll($event)"
+      [checked]="isAllSelected()"
+      [indeterminate]="isIndeterminate()">
+    </mat-checkbox>
+  </th>
+
+  <td mat-cell *matCellDef="let b">
+    <mat-checkbox
+      [(ngModel)]="b.selected"
+      [disabled]="!isEarliestBooking(b)">
+    </mat-checkbox>
+  </td>
+</ng-container>
     <!-- ID -->
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef> ID </th>

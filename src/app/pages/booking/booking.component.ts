@@ -80,6 +80,9 @@ ngOnInit() {
   this.bookingChangedSub = this.bookingService.bookingChanged$.subscribe(() => {
     this.loadBookedSlots();
   });
+  setInterval(() => {
+    this.bookings = [...this.bookings];
+  }, 30000); // 30s update 1 lần
 }
   ngOnDestroy() {
     this.bookingChangedSub?.unsubscribe();
@@ -102,21 +105,61 @@ ngOnInit() {
 
   const dateStr = this.formatDateLocal(this.bookingForm.date);
 
-  this.bookingService.getBookingsByDate(dateStr, this.bookingForm.meetingRoomId || undefined)
-    .subscribe(res => {
-      // map dữ liệu đúng với API
-      this.bookings = res.map((b: any) => ({
-        roomName: b.roomName || 'Room',  // nếu API không trả roomName, có thể dùng 'Room'
-        location: b.location || 'N/A',
-        status: b.status || '',
-        startTime: b.startTime ? new Date(b.startTime) : null,
-        endTime: b.endTime ? new Date(b.endTime) : null,
-        capacity: b.capacity || 0
-      }));
+  this.bookingService.getBookingsByDate(
+    dateStr,
+    this.bookingForm.meetingRoomId || undefined
+  )
+  .subscribe(res => {
 
-      this.pageIndex = 0;
-    });
+    this.bookings = res
+  // ✅ chỉ loại bỏ pending/expired
+  .filter((b: any) => {
+    const status = b.status?.toLowerCase();
+    return status === 'booked'
+        || status === 'completed'
+        || status === 'ongoing';
+  })
+
+  // ✅ sort: ongoing lên đầu
+  .sort((a: any, b: any) => {
+    const statusA = a.status?.toLowerCase();
+    const statusB = b.status?.toLowerCase();
+
+    if (statusA === 'ongoing') return -1;
+    if (statusB === 'ongoing') return 1;
+
+    return new Date(a.startTime).getTime() - new Date(b.startTime).getTime();
+  })
+
+  // map
+  .map((b: any) => ({
+    roomName: b.roomName || 'Room',
+    location: b.location || 'N/A',
+    status: b.status || '',
+    startTime: b.startTime ? new Date(b.startTime) : null,
+    endTime: b.endTime ? new Date(b.endTime) : null,
+    capacity: b.capacity || 0
+  }));
+
+    this.pageIndex = 0;
+  });
 }
+getStatusClass(status: string): string {
+  switch (status?.toLowerCase()) {
+    case 'booked':
+      return 'status-booked';
+
+    case 'completed':
+      return 'status-completed';
+
+    case 'ongoing':
+      return 'status-ongoing';
+
+    default:
+      return '';
+  }
+}
+
 
 formatDateLocal(date: Date): string {
   const d = new Date(date);

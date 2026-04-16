@@ -95,6 +95,21 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     `,
       };
     },
+    eventDidMount: (info) => {
+    const status = info.event.extendedProps['status']?.toLowerCase();
+
+    if (status === 'booked') {
+      info.el.style.backgroundColor = '#aeb6df';
+    }
+
+    if (status === 'ongoing') {
+      info.el.style.backgroundColor = '#adc5ae';
+    }
+
+    if (status === 'completed') {
+      info.el.style.backgroundColor = '#8a9cff';
+    }
+  },
     selectable: false,
     firstDay: 1,
     slotMinTime: '08:00:00',
@@ -230,32 +245,41 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     this.router.navigate(['/login']);
   }
   // 🔥 Load booking từ backend, filter booking đã hủy
-  loadBookings() {
-    this.bookingService.getAllBookings().subscribe((data: any) => {
-      const bookings = data.$values || data.data || data;
+ loadBookings() {
+  this.bookingService.getAllBookings().subscribe((data: any) => {
+    const bookings = data.$values || data.data || data;
 
-      const events = bookings
-        .filter((b: any) => b.status !== 'Cancelled' && b.status !== 'Pending') // bỏ booking đã hủy và đang chờ
-        .map((b: any) => ({
-          id: b.id,
-          title: b.meetingRoom?.name || 'No Room',
-          start: new Date(b.startTime),
-          end: new Date(b.endTime),
-          extendedProps: { status: b.status },
-        }));
+    const events = bookings
+      // ✅ chỉ lấy đúng 3 trạng thái
+      .filter((b: any) => {
+        const status = b.status?.toLowerCase();
+        return status === 'booked'
+            || status === 'ongoing'
+            || status === 'completed';
+      })
 
-      // cập nhật vào calendar
-      this.calendarOptions.events = events;
+      .map((b: any) => ({
+        id: b.id,
+        title: b.meetingRoom?.name || 'No Room',
+        start: new Date(b.startTime),
+        end: new Date(b.endTime),
 
-      // refresh calendar
-      if (this.calendarComponent) {
-        const calendarApi = this.calendarComponent.getApi();
-        calendarApi.removeAllEventSources(); // 🔥 quan trọng
-        calendarApi.setOption('events', events);
-        calendarApi.refetchEvents(); // 🔥 bắt buộc
-      }
-    });
-  }
+        // 🔥 giữ status để dùng render màu
+        extendedProps: {
+          status: b.status
+        }
+      }));
+
+    this.calendarOptions.events = events;
+
+    if (this.calendarComponent) {
+      const calendarApi = this.calendarComponent.getApi();
+      calendarApi.removeAllEventSources();
+      calendarApi.setOption('events', events);
+      calendarApi.refetchEvents();
+    }
+  });
+}
 
   updateViewState() {
     const calendarApi = this.calendarComponent.getApi();
@@ -307,4 +331,5 @@ export class CalendarComponent implements OnInit, AfterViewInit {
   goProfile() {
     this.router.navigate(['/profile']);
   }
+
 }
