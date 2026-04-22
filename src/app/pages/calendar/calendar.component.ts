@@ -95,21 +95,21 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     `,
       };
     },
-    eventDidMount: (info) => {
-    const status = info.event.extendedProps['status']?.toLowerCase();
+   eventDidMount: (info) => {
+  const status = info.event.extendedProps['displayStatus']?.toLowerCase();
 
-    if (status === 'booked') {
-      info.el.style.backgroundColor = '#aeb6df';
-    }
+  if (status === 'upcoming') {
+    info.el.style.backgroundColor = '#aeb6df';
+  }
 
-    if (status === 'ongoing') {
-      info.el.style.backgroundColor = '#adc5ae';
-    }
+  if (status === 'ongoing') {
+    info.el.style.backgroundColor = '#adc5ae';
+  }
 
-    if (status === 'completed') {
-      info.el.style.backgroundColor = '#8a9cff';
-    }
-  },
+  if (status === 'completed') {
+    info.el.style.backgroundColor = '#8a9cff';
+  }
+},
     selectable: false,
     firstDay: 1,
     slotMinTime: '08:00:00',
@@ -250,13 +250,14 @@ export class CalendarComponent implements OnInit, AfterViewInit {
     const bookings = data.$values || data.data || data;
 
     const events = bookings
-      // ✅ chỉ lấy đúng 3 trạng thái
-      .filter((b: any) => {
-        const status = b.status?.toLowerCase();
-        return status === 'booked'
-            || status === 'ongoing'
-            || status === 'completed';
-      })
+  .filter((b: any) => b.status !== 'Pending') // ✅ đúng
+
+  .filter((b: any) => {
+    const status = b.displayStatus?.toLowerCase();
+    return status === 'upcoming'
+        || status === 'ongoing'
+        || status === 'completed';
+  })
 
       .map((b: any) => ({
         id: b.id,
@@ -266,7 +267,8 @@ export class CalendarComponent implements OnInit, AfterViewInit {
 
         // 🔥 giữ status để dùng render màu
         extendedProps: {
-          status: b.status
+          status: b.status,
+          displayStatus: b.displayStatus
         }
       }));
 

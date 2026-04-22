@@ -98,14 +98,14 @@ onRoomChange(event: any) {
 }
  getBookings() {
   this.bookingService.getAllBookings().subscribe((res: any) => {
-    const data = res.data;
 
-    // 🔥 reset selected
+    const data = Array.isArray(res) ? res : (res?.data ?? []);
+
     data.forEach((b: any) => b.selected = false);
 
     this.originalData = data;
 
-    this.rooms = [...new Set(data.map((b: any) => b.meetingRoom.name))];
+    this.rooms = [...new Set(data.map((b: any) => b.meetingRoom?.name))];
 
     this.applyFilter();
   });
@@ -237,7 +237,7 @@ openUpdateDialog(booking: any) {
 
   dialogRef.afterClosed().subscribe(result => {
     if (result) {
-      
+
       this.getBookings();
       this.calendarState.triggerRefresh(); // reload
       this.toastr.success('Booking updated');

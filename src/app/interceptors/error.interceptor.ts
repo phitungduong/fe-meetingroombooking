@@ -33,8 +33,8 @@ export class ErrorInterceptor implements HttpInterceptor {
       }
 
       if (error.status === 500) {
-        message = "System error";
-      }
+  message = error.error?.message || error.message || "System error";
+}
 
       this.toastr.error(message);
 
